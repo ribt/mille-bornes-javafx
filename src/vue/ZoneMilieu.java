@@ -1,6 +1,7 @@
 package vue;
 
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -29,6 +30,8 @@ public class ZoneMilieu extends GridPane {
 		this.defausse = new ImageView();
 		
 		setAlignment(Pos.CENTER);
+		setPadding(new Insets(50, 20, 20, 20)); // top, right, bottom, left
+		setHgap(5);
 		
 		Label lab1 = new Label("Pioche");
 		setConstraints(lab1, 0, 0);

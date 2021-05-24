@@ -30,7 +30,7 @@ public class Main extends Application {
 		 
 		stage.setScene(scene);
 		stage.sizeToScene();
-		stage.setTitle("Une fenêtre basique");
+		stage.setTitle("1000 bornes");
 		stage.setResizable(false);
 		stage.show();
 		

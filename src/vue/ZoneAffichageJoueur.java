@@ -30,6 +30,8 @@ public class ZoneAffichageJoueur extends GridPane {
 		this.compteur = new Label();
 		
 		setAlignment(Pos.CENTER);
+		setHgap(5);
+		setVgap(5);
 		
 		setConstraints(nom, 1, 0);
 		setHalignment(nom, HPos.CENTER);

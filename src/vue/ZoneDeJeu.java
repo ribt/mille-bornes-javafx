@@ -2,6 +2,8 @@ package vue;
 
 import java.util.List;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
@@ -16,6 +18,9 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 	
 	public ZoneDeJeu() {
 		super();
+		
+		setAlignment(Pos.CENTER);
+		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left
 		
 		for (int i = 0; i < 7; i++) {
 			cartes[i] = new ImageView();

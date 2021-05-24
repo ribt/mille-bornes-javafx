@@ -264,5 +264,14 @@ public class Jeu implements Sauvegardable {
       return null;
     return defausse.regarde();
   }
+  
+  /** Consulte la carte au somment de la pioche, sans l'en retirer.
+   * @return null si la pioche est vide, la carte du dessus sinon
+   */
+  public Carte regardePioche() {
+    if (sabot == null || sabot.estVide())
+      return null;
+    return sabot.regarde();
+  }
 
 } // class Jeu

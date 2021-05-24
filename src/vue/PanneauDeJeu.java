@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import modele.Jeu;
 
-public class PanneauDeJeu extends BorderPane{
+public class PanneauDeJeu extends BorderPane {
 	private Jeu jeu;
 	private ZoneDeJeu zoneDeJeu;
 	private ZoneAffichageJoueur affJoueurHaut;
@@ -17,12 +17,13 @@ public class PanneauDeJeu extends BorderPane{
 		
 		this.jeu = jeu;
 		
-		zoneDeJeu = new ZoneDeJeu();		
+		zoneDeJeu = new ZoneDeJeu(jeu);		
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
 		affJoueurGauche = new ZoneAffichageJoueur();
-		milieu = new ZoneMilieu();
+		milieu = new ZoneMilieu(jeu);
 		
+		setAlignment(zoneDeJeu, Pos.CENTER);
 	    setBottom(zoneDeJeu);
 	    setAlignment(affJoueurHaut, Pos.CENTER);
 	    setTop(affJoueurHaut);
@@ -31,6 +32,8 @@ public class PanneauDeJeu extends BorderPane{
 	    setAlignment(affJoueurGauche, Pos.CENTER);
 	    setLeft(affJoueurGauche);
 	    setCenter(milieu);
+	    
+	    milieu.actualiserAffichage();
 	    
 	    //Pane centre = new Pane(zoneDeDessin);
 	    //cadre.setCenter(centre);

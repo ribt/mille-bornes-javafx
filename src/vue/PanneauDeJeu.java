@@ -22,7 +22,6 @@ public class PanneauDeJeu extends BorderPane {
 		
 		this.jeu = jeu;
 		
-		
 		zoneDeJeu = new ZoneDeJeu();		
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
@@ -49,7 +48,5 @@ public class PanneauDeJeu extends BorderPane {
 	    milieu.actualiserAffichage(jeu);
 	    affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
 	    zoneDeJeu.actualiserAffichage(jeu.getJoueurActif());
-	    
 	}
-
 }

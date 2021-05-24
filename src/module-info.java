@@ -1,6 +1,7 @@
 module millebornesGUI {
-	requires javafx.controls;
 	requires com.google.gson;
+	
+	requires javafx.controls;
 	requires javafx.graphics;
 	requires javafx.fxml;
 	

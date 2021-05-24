@@ -4,12 +4,7 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import modele.Jeu;
 import modele.Joueur;
 import modele.cartes.Carte;
 
@@ -21,6 +16,8 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 		
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left
+		
+		setConstraints(nom, 3, 0);
 		
 		for (int i = 0; i < 7; i++) {
 			cartes[i] = new ImageView();
@@ -36,6 +33,8 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 		super.actualiserAffichage(joueur);
 		
 		List<Carte> main = joueur.getMain();
+		
+		cartes[6].setImage(null); // au minimum le joueur a 6 cartes
 		
 		for (int i = 0; i < main.size(); i++) {
 			cartes[i].setImage(main.get(i).getImage());

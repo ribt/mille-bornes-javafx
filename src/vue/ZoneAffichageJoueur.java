@@ -2,20 +2,15 @@ package vue;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import modele.Joueur;
 import modele.cartes.Carte;
 
 public class ZoneAffichageJoueur extends GridPane {
-	private Label nom;
+	protected Label nom;
 	private ImageView limiteVitesse;
 	private ImageView bataille;
 	private Label compteur;

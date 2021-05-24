@@ -3,6 +3,7 @@ package modele.cartes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import javafx.scene.image.Image;
 import modele.EtatJoueur;
 import modele.Jeu;
 import modele.Sauvegardable;
@@ -18,10 +19,15 @@ public abstract class Carte implements Sauvegardable {
   public final String nom;
   /** La catégorie de la carte */
   public final Categorie categorie;
+  
+  private Image image;
 
   public Carte(String nom, Categorie categorie) {
     this.nom = nom;
     this.categorie = categorie;
+    if (!(this instanceof Borne)) {
+	    this.image = new Image(Carte.class.getResource("/images/"+this.getClass().getSimpleName()+".jpg").toString());
+    }
   }
 
   public static Carte fromSave(JsonElement save) {
@@ -66,6 +72,10 @@ public abstract class Carte implements Sauvegardable {
   @Override
   public String toString() {
     return nom;
+  }
+  
+  public Image getImage() {
+	  return image;
   }
 
 } // public class Carte

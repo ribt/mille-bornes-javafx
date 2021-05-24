@@ -2,6 +2,7 @@ package modele.cartes;
 
 import com.google.gson.JsonObject;
 
+import javafx.scene.image.Image;
 import modele.EtatJoueur;
 import modele.Jeu;
 
@@ -34,5 +35,10 @@ public class Borne extends Carte {
     JsonObject res = new JsonObject();
     res.addProperty("borne", km);
     return res;
+  }
+  
+  @Override
+  public Image getImage() {
+	  return new Image(Carte.class.getResource("/images/Borne"+km+".jpg").toString());
   }
 }

@@ -18,7 +18,8 @@ public final class AsDuVolant extends Botte {
     super("As du Volant");
   }
 
-  public boolean contre(Attaque carte) {
+  @Override
+public boolean contre(Attaque carte) {
     return carte.estContreeParAsDuVolant();
   }
 

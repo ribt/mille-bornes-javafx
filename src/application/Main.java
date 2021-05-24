@@ -4,11 +4,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
-import modele.cartes.bottes.AsDuVolant;
 import modele.joueurs.Humain;
 import vue.PanneauDeJeu;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 
 public class Main extends Application {
 	
@@ -19,8 +17,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		Jeu jeu = new Jeu();
-		
-		
 		
 		Joueur j1 = new Humain("j1");
 		Joueur j2 = new Humain("j2");

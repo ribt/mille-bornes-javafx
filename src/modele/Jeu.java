@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import modele.cartes.Carte;
+import modele.cartes.CarteVide;
 
 import java.util.*;
 
@@ -261,7 +262,7 @@ public class Jeu implements Sauvegardable {
    */
   public Carte regardeDefausse() {
     if (defausse == null || defausse.estVide())
-      return null;
+      return CarteVide.unique;
     return defausse.regarde();
   }
   
@@ -270,7 +271,7 @@ public class Jeu implements Sauvegardable {
    */
   public Carte regardePioche() {
     if (sabot == null || sabot.estVide())
-      return null;
+      return CarteVide.unique;
     return sabot.regarde();
   }
 

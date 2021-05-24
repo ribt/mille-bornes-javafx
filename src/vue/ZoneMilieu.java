@@ -22,7 +22,7 @@ public class ZoneMilieu extends GridPane {
 	private ImageView pioche;
 	private ImageView defausse;
 	private Label nbCartes;
-	private Image vide = new Image(Carte.class.getResource("/images/vide.jpg").toString());
+	private Image carteDos = new Image(Carte.class.getResource("/images/Dos.jpg").toString());
 	
 	public ZoneMilieu(Jeu jeu) {
 		this.jeu = jeu;
@@ -39,13 +39,13 @@ public class ZoneMilieu extends GridPane {
 		Label lab2 = new Label("Défausse");
 		setConstraints(lab2, 1, 0);
 		
-		pioche.setFitHeight(180);
+		pioche.setFitHeight(150);
         pioche.setPreserveRatio(true);
         pioche.setSmooth(true);
         pioche.setCache(true);
         setConstraints(pioche, 0, 1);
 
-		defausse.setFitHeight(180);
+		defausse.setFitHeight(150);
 		defausse.setPreserveRatio(true);
 		defausse.setSmooth(true);
         defausse.setCache(true);
@@ -63,10 +63,9 @@ public class ZoneMilieu extends GridPane {
 	}
 	
 	public void actualiserAffichage() {
-		if (jeu.getNbCartesSabot() > 0)
-			pioche.setImage(jeu.regardePioche().getImage());
+		nbCartes.setText(jeu.getNbCartesSabot()+" cartes");
+		pioche.setImage(carteDos);
 		if (jeu.regardeDefausse() != null)
 			defausse.setImage(jeu.regardeDefausse().getImage());
 	}
-
 }

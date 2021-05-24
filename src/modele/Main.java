@@ -1,17 +1,5 @@
 package modele;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import modele.joueurs.Gentil;
-import modele.joueurs.Humain;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-
 /**
  * Lance le jeu de Mille-Bornes avec un ensemble de joueurs.
  */

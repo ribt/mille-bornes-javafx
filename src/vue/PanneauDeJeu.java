@@ -2,16 +2,20 @@ package vue;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
+import modele.Jeu;
 
 public class PanneauDeJeu extends BorderPane{
+	private Jeu jeu;
 	private ZoneDeJeu zoneDeJeu;
 	private ZoneAffichageJoueur affJoueurHaut;
 	private ZoneAffichageJoueur affJoueurDroite;
 	private ZoneAffichageJoueur affJoueurGauche;
 	private ZoneMilieu milieu;
 
-	public PanneauDeJeu() {
+	public PanneauDeJeu(Jeu jeu) {
 		super();
+		
+		this.jeu = jeu;
 		
 		zoneDeJeu = new ZoneDeJeu();		
 		affJoueurHaut = new ZoneAffichageJoueur();

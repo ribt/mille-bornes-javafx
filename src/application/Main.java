@@ -2,6 +2,9 @@ package application;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import modele.Jeu;
+import modele.Joueur;
+import modele.joueurs.Humain;
 import vue.PanneauDeJeu;
 import javafx.scene.Scene;
 
@@ -13,8 +16,15 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) {
-		PanneauDeJeu panneau = new PanneauDeJeu();
+		Jeu jeu = new Jeu();
+		PanneauDeJeu panneau = new PanneauDeJeu(jeu);
 		Scene scene = new Scene(panneau);
+		
+		Joueur j1 = new Humain("j1");
+		Joueur j2 = new Humain("j2");
+		
+		jeu.ajouteJoueurs(j1, j2);
+		jeu.prepareJeu();
 		 
 		stage.setScene(scene);
 		stage.sizeToScene();

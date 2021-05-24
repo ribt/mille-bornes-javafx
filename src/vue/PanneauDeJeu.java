@@ -1,7 +1,12 @@
 package vue;
 
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import modele.Jeu;
 
 public class PanneauDeJeu extends BorderPane {
@@ -17,6 +22,7 @@ public class PanneauDeJeu extends BorderPane {
 		
 		this.jeu = jeu;
 		
+		
 		zoneDeJeu = new ZoneDeJeu();		
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
@@ -26,23 +32,24 @@ public class PanneauDeJeu extends BorderPane {
 		setAlignment(zoneDeJeu, Pos.CENTER);
 	    setBottom(zoneDeJeu);
 	    setAlignment(affJoueurHaut, Pos.CENTER);
-	    setTop(affJoueurHaut);
+	    
 	    setAlignment(affJoueurDroite, Pos.CENTER);
 	    setRight(affJoueurDroite);
 	    setAlignment(affJoueurGauche, Pos.CENTER);
 	    setLeft(affJoueurGauche);
 	    setCenter(milieu);
 	    
+	    try {
+			MenuBar menus = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml")).load();
+			setTop(new VBox(10, menus, affJoueurHaut));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
 	    milieu.actualiserAffichage(jeu);
-	    affJoueurHaut.actualiserAffichage(jeu.getJoueurActif());
+	    affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
 	    zoneDeJeu.actualiserAffichage(jeu.getJoueurActif());
 	    
-	    //Pane centre = new Pane(zoneDeDessin);
-	    //cadre.setCenter(centre);
-
-	    //Un canvas n'étant pas resizable, on doit le redimensionner "à la main".
-	    //zoneDeDessin.widthProperty().bind(centre.widthProperty());
-	    //zoneDeDessin.heightProperty().bind(centre.heightProperty()); // Prend en compte la barre d'état...
 	}
 
 }

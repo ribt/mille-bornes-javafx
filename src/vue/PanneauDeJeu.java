@@ -21,7 +21,7 @@ public class PanneauDeJeu extends BorderPane {
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
 		affJoueurGauche = new ZoneAffichageJoueur();
-		milieu = new ZoneMilieu(jeu);
+		milieu = new ZoneMilieu();
 		
 		setAlignment(zoneDeJeu, Pos.CENTER);
 	    setBottom(zoneDeJeu);
@@ -33,7 +33,8 @@ public class PanneauDeJeu extends BorderPane {
 	    setLeft(affJoueurGauche);
 	    setCenter(milieu);
 	    
-	    milieu.actualiserAffichage();
+	    milieu.actualiserAffichage(jeu);
+	    affJoueurHaut.actualiserAffichage(jeu.getJoueurActif());
 	    
 	    //Pane centre = new Pane(zoneDeDessin);
 	    //cadre.setCenter(centre);

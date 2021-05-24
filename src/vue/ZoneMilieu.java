@@ -18,21 +18,17 @@ import modele.Jeu;
 import modele.cartes.Carte;
 
 public class ZoneMilieu extends GridPane {
-	private Jeu jeu;
 	private ImageView pioche;
 	private ImageView defausse;
 	private Label nbCartes;
 	private Image carteDos = new Image(Carte.class.getResource("/images/Dos.jpg").toString());
+	private Image carteVide = new Image(Carte.class.getResource("/images/CarteVide.jpg").toString());
 	
-	public ZoneMilieu(Jeu jeu) {
-		this.jeu = jeu;
+	public ZoneMilieu() {
 		this.pioche = new ImageView();
 		this.defausse = new ImageView();
 		
 		setAlignment(Pos.CENTER);
-		setPrefSize(200, 100);
-	     // never size the gridpane larger than its preferred size:
-	     setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		
 		Label lab1 = new Label("Pioche");
 		setConstraints(lab1, 0, 0);
@@ -62,10 +58,12 @@ public class ZoneMilieu extends GridPane {
 		}
 	}
 	
-	public void actualiserAffichage() {
+	public void actualiserAffichage(Jeu jeu) {
 		nbCartes.setText(jeu.getNbCartesSabot()+" cartes");
 		pioche.setImage(carteDos);
-		if (jeu.regardeDefausse() != null)
+		if (jeu.regardeDefausse() == null)
+			defausse.setImage(carteVide);
+		else
 			defausse.setImage(jeu.regardeDefausse().getImage());
 	}
 }

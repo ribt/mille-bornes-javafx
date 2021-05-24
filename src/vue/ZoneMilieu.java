@@ -35,13 +35,13 @@ public class ZoneMilieu extends GridPane {
 		Label lab2 = new Label("Défausse");
 		setConstraints(lab2, 1, 0);
 		
-		pioche.setFitHeight(150);
+		pioche.setFitHeight(120);
         pioche.setPreserveRatio(true);
         pioche.setSmooth(true);
         pioche.setCache(true);
         setConstraints(pioche, 0, 1);
 
-		defausse.setFitHeight(150);
+		defausse.setFitHeight(120);
 		defausse.setPreserveRatio(true);
 		defausse.setSmooth(true);
         defausse.setCache(true);

@@ -17,7 +17,7 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left
 		
-		setConstraints(nom, 3, 0);
+		setColumnSpan(nom, 7);
 		
 		for (int i = 0; i < 7; i++) {
 			cartes[i] = new ImageView();

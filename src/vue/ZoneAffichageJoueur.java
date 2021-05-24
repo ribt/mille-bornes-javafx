@@ -28,7 +28,7 @@ public class ZoneAffichageJoueur extends GridPane {
 		setHgap(5);
 		setVgap(5);
 		
-		setConstraints(nom, 1, 0);
+		setConstraints(nom, 0, 0, 3, 1); // columnIndex, rowIndex, colspan, rowspan
 		setHalignment(nom, HPos.CENTER);
 
 		limiteVitesse.setFitHeight(100);

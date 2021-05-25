@@ -30,7 +30,8 @@ public class PanneauDeJeu extends BorderPane {
 		
 		setAlignment(zoneDeJeu, Pos.CENTER);
 	    setBottom(zoneDeJeu);
-	    setAlignment(affJoueurHaut, Pos.CENTER);
+	    
+	    //setAlignment(affJoueurHaut, Pos.CENTER);
 	    
 	    setAlignment(affJoueurDroite, Pos.CENTER);
 	    setRight(affJoueurDroite);

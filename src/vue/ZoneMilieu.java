@@ -34,14 +34,14 @@ public class ZoneMilieu extends GridPane {
 		
 		pioche.setFitHeight(120);
         pioche.setPreserveRatio(true);
-        pioche.setSmooth(true);
-        pioche.setCache(true);
+        pioche.setSmooth(true); // cosmétique
+        pioche.setCache(true); // optimisation
         setConstraints(pioche, 0, 1);
 
 		defausse.setFitHeight(120);
 		defausse.setPreserveRatio(true);
-		defausse.setSmooth(true);
-        defausse.setCache(true);
+		defausse.setSmooth(true);  // cosmétique
+        defausse.setCache(true); // optimisation
         setConstraints(defausse, 1, 1);
         
         this.nbCartes = new Label("xx cartes");
@@ -57,7 +57,7 @@ public class ZoneMilieu extends GridPane {
 	
 	public void actualiserAffichage(Jeu jeu) {
 		nbCartes.setText(jeu.getNbCartesSabot()+" cartes");
-		pioche.setImage(carteDos);
+		pioche.setImage(carteDos); // TODO : dans le constructeur
 		if (jeu.regardeDefausse() == null)
 			defausse.setImage(carteVide);
 		else

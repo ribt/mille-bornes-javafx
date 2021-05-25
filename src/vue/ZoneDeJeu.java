@@ -14,7 +14,7 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 	public ZoneDeJeu() {
 		super();
 		
-		setAlignment(Pos.CENTER);
+		//setAlignment(Pos.CENTER);
 		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left
 		
 		setColumnSpan(nom, 7);

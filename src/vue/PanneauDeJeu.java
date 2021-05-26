@@ -2,6 +2,7 @@ package vue;
 
 import java.io.IOException;
 
+import controleur.EcouteurSouris;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.MenuBar;
@@ -16,22 +17,22 @@ public class PanneauDeJeu extends BorderPane {
 	private ZoneAffichageJoueur affJoueurDroite;
 	private ZoneAffichageJoueur affJoueurGauche;
 	private ZoneMilieu milieu;
+	private EcouteurSouris controleur;
 
 	public PanneauDeJeu(Jeu jeu) {
 		super();
 		
 		this.jeu = jeu;
 		
-		zoneDeJeu = new ZoneDeJeu();		
+		controleur = new EcouteurSouris(jeu);
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
 		affJoueurGauche = new ZoneAffichageJoueur();
 		milieu = new ZoneMilieu();
+		zoneDeJeu = new ZoneDeJeu(controleur);	
 		
 		setAlignment(zoneDeJeu, Pos.CENTER);
 	    setBottom(zoneDeJeu);
-	    
-	    //setAlignment(affJoueurHaut, Pos.CENTER);
 	    
 	    setAlignment(affJoueurDroite, Pos.CENTER);
 	    setRight(affJoueurDroite);

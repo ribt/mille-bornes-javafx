@@ -2,6 +2,7 @@ package vue;
 
 import java.util.List;
 
+import controleur.EcouteurSouris;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -9,12 +10,15 @@ import modele.Joueur;
 import modele.cartes.Carte;
 
 public class ZoneDeJeu extends ZoneAffichageJoueur {
-	ImageView[] cartes =  new ImageView[7];
+	private ImageView[] cartes =  new ImageView[7];
+	private final EcouteurSouris controleur;
 	
-	public ZoneDeJeu() {
+	public ZoneDeJeu(EcouteurSouris controleur) {
 		super();
 		
-		//setAlignment(Pos.CENTER);
+		this.controleur = controleur;
+		
+		setAlignment(Pos.CENTER);
 		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left
 		
 		setColumnSpan(nom, 7);
@@ -25,6 +29,7 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 			cartes[i].setPreserveRatio(true);
 			setConstraints(cartes[i], i, 2);
 			getChildren().add(cartes[i]);
+			cartes[i].setOnMousePressed(controleur::carteCliquee);
 		}
 	}
 	

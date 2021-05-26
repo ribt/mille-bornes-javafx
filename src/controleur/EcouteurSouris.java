@@ -17,12 +17,8 @@ public class EcouteurSouris {
 	}
 	
 	public void carteCliquee(MouseEvent event) {
-		try {
-			jeu.getJoueurActif().joueCarte(jeu, GridPane.getColumnIndex((ImageView) event.getTarget()));
-			jeu.activeProchainJoueurEtTireCarte();
-		} catch (IllegalStateException e) {
-			new Alert(Alert.AlertType.ERROR , e.getMessage()).show();
-		}
+		ImageView img = (ImageView) event.getTarget();
+		panneau.getPremierPlan().setDragging(img.getImage(), GridPane.getColumnIndex(img));
 		panneau.actualiserAffichage();
 	}
 

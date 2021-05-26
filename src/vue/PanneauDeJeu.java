@@ -24,7 +24,7 @@ public class PanneauDeJeu extends BorderPane {
 		
 		this.jeu = jeu;
 		
-		controleur = new EcouteurSouris(jeu);
+		controleur = new EcouteurSouris(jeu, this);
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
 		affJoueurGauche = new ZoneAffichageJoueur();

@@ -273,4 +273,7 @@ public class Jeu implements Sauvegardable {
     return sabot.regarde();
   }
 
+  public int getNbJoueurs() {
+	  return joueurs.size();
+  }
 } // class Jeu

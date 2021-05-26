@@ -16,17 +16,11 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) {
-		Jeu jeu = new Jeu();
-		
-		Joueur j1 = new Humain("j1");
-		Joueur j2 = new Humain("j2");
-		
-		jeu.ajouteJoueurs(j1, j2);
-		jeu.prepareJeu();
-		
+		Jeu jeu = new Jeu();		
 		PanneauDeJeu panneau = new PanneauDeJeu(jeu);
 		Scene scene = new Scene(panneau);
-		
+		Joueur j1 = new Humain("j1");
+		Joueur j2 = new Humain("j2");
 		 
 		stage.setScene(scene);
 		stage.sizeToScene();
@@ -34,6 +28,10 @@ public class Main extends Application {
 		stage.setResizable(false);
 		stage.show();
 		
-		//System.out.println(AsDuVolant.class.getResource("/images/AsDuVolant.jpg").toString());
+		jeu.ajouteJoueurs(j1, j2);
+		jeu.prepareJeu();
+		
+		panneau.actualiserAffichage();
+		stage.sizeToScene();
 	}	
 }

@@ -45,9 +45,23 @@ public class PanneauDeJeu extends BorderPane {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    
-	    milieu.actualiserAffichage(jeu);
-	    affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
+	}
+	
+	public void actualiserAffichage() {
+		milieu.actualiserAffichage(jeu);
 	    zoneDeJeu.actualiserAffichage(jeu.getJoueurActif());
+	    
+	    int n = jeu.getNbJoueurs();
+	    
+	    if (n == 2) {
+	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
+	    } else if (n == 3) {
+	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
+	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
+	    } else { // n == 4
+	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
+	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
+	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
+	    }
 	}
 }

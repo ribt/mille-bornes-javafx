@@ -4,37 +4,38 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import modele.cartes.Carte;
 
 public class PremierPlan extends Pane {
 	private final ImageView cadre;
 	private int draggingCardNumber = -1;
+	private double offX;
+	private double offY;
 
 	public PremierPlan() {
-		setPickOnBounds(false); // pour que le click traverse le PremierPlan
-		/* Defines how the picking computation is done for this node
-		 * when triggered by a MouseEvent or a contains function call.
-		 * If pickOnBounds is true, then picking is computed by intersecting
-		 * with the bounds of this node, else picking is computed by intersecting
-		 * with the geometric shape of this node.
-		 * 
-		 * C'est ça qui empêche le print de "mouse moved" ??
-		 */
+		setPickOnBounds(false); // transmet l'évnènement souris s'il a lieu sur les parties vides du panneau
 		
 		cadre = new ImageView();
 		cadre.setFitHeight(120);
 		cadre.setPreserveRatio(true);
 		
-		setOnMouseMoved((MouseEvent event) -> {
-			System.out.println("mouse moved");
-			cadre.setX(event.getSceneX());
-			cadre.setY(event.getSceneY());
-		});
+		getChildren().add(cadre);
 	}
 	
-	public void setDragging(Image img, int number) {
-		System.out.println("dragging "+number);
-		draggingCardNumber = number;
+	public void setDragging(Image img, int number, double offX, double offY) {
+		this.offX = offX;
+		this.offY = offY;
+		this.draggingCardNumber = number;
 		cadre.setImage(img);
+	}
+	
+	public void stopDragging() {
+		cadre.setImage(null);
+	}
+
+	public void sourisBouge(MouseEvent event) {
+		cadre.setX(event.getSceneX()+offX);
+		cadre.setY(event.getSceneY()+offY);
 	}
 
 }

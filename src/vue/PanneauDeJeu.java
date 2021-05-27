@@ -6,6 +6,7 @@ import controleur.EcouteurSouris;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.MenuBar;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,7 +29,8 @@ public class PanneauDeJeu extends StackPane {
 		premierPlan = new PremierPlan();
 		secondPlan = new BorderPane();
 		
-		getChildren().addAll(secondPlan, premierPlan);
+		getChildren().addAll(premierPlan, secondPlan);
+		premierPlan.toFront();
 		
 		controleur = new EcouteurSouris(jeu, this);
 		affJoueurHaut = new ZoneAffichageJoueur();
@@ -52,6 +54,8 @@ public class PanneauDeJeu extends StackPane {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	    
+	    secondPlan.setOnMouseDragged(premierPlan::sourisBouge);
 	}
 	
 	public void actualiserAffichage() {

@@ -17,13 +17,13 @@ public class EcouteurSouris {
 	}
 	
 	public void carteCliquee(MouseEvent event) {
-		ImageView img = (ImageView) event.getTarget();
-		//panneau.getPremierPlan().setDragging(img.getImage(), GridPane.getColumnIndex(img), event.getSceneX()-img.getX(), event.getSceneY()-img.getY());
-		// TODO : calculer le bon offset
-		panneau.getPremierPlan().setDragging(img.getImage(), GridPane.getColumnIndex(img), 0, 0);
-		panneau.getPremierPlan().sourisBouge(event);
-		panneau.actualiserAffichage();
-		System.out.println(event.getSource());
+//		ImageView img = (ImageView) event.getTarget();
+//		//panneau.getPremierPlan().setDragging(img.getImage(), GridPane.getColumnIndex(img), event.getSceneX()-img.getX(), event.getSceneY()-img.getY());
+//		// TODO : calculer le bon offset
+//		panneau.getPremierPlan().setDragging(img.getImage(), GridPane.getColumnIndex(img), 0, 0);
+//		panneau.getPremierPlan().sourisBouge(event);
+//		panneau.actualiserAffichage();
+//		System.out.println(event.getSource());
 	}
 
 }

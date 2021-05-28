@@ -12,10 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import modele.Jeu;
 
-public class PanneauDeJeu extends StackPane {
+public class PanneauDeJeu extends BorderPane {
 	private Jeu jeu;
-	private PremierPlan premierPlan;
-	private BorderPane secondPlan;
 	private ZoneDeJeu zoneDeJeu;
 	private ZoneAffichageJoueur affJoueurHaut;
 	private ZoneAffichageJoueur affJoueurDroite;
@@ -26,12 +24,6 @@ public class PanneauDeJeu extends StackPane {
 	public PanneauDeJeu(Jeu jeu) {
 		this.jeu = jeu;
 		
-		premierPlan = new PremierPlan();
-		secondPlan = new BorderPane();
-		
-		getChildren().addAll(premierPlan, secondPlan);
-		premierPlan.toFront();
-		
 		controleur = new EcouteurSouris(jeu, this);
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
@@ -39,23 +31,21 @@ public class PanneauDeJeu extends StackPane {
 		milieu = new ZoneMilieu();
 		zoneDeJeu = new ZoneDeJeu(controleur);	
 		
-		secondPlan.setAlignment(zoneDeJeu, Pos.CENTER);
-		secondPlan.setBottom(zoneDeJeu);
+		setAlignment(zoneDeJeu, Pos.CENTER);
+		setBottom(zoneDeJeu);
 	    
-		secondPlan.setAlignment(affJoueurDroite, Pos.CENTER);
-		secondPlan.setRight(affJoueurDroite);
-		secondPlan.setAlignment(affJoueurGauche, Pos.CENTER);
-	    secondPlan.setLeft(affJoueurGauche);
-	    secondPlan.setCenter(milieu);
+		setAlignment(affJoueurDroite, Pos.CENTER);
+		setRight(affJoueurDroite);
+		setAlignment(affJoueurGauche, Pos.CENTER);
+	    setLeft(affJoueurGauche);
+	    setCenter(milieu);
 	    
 	    try {
 			MenuBar menus = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml")).load();
-			secondPlan.setTop(new VBox(10, menus, affJoueurHaut));
+			setTop(new VBox(10, menus, affJoueurHaut));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    
-	    secondPlan.setOnMouseDragged(premierPlan::sourisBouge);
 	}
 	
 	public void actualiserAffichage() {
@@ -74,9 +64,5 @@ public class PanneauDeJeu extends StackPane {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
-	}
-	
-	public PremierPlan getPremierPlan() {
-		return premierPlan;
 	}
 }

@@ -28,7 +28,7 @@ public class PanneauDeJeu extends BorderPane {
 		affJoueurHaut = new ZoneAffichageJoueur();
 		affJoueurDroite = new ZoneAffichageJoueur();
 		affJoueurGauche = new ZoneAffichageJoueur();
-		milieu = new ZoneMilieu();
+		milieu = new ZoneMilieu(controleur);
 		zoneDeJeu = new ZoneDeJeu(controleur);	
 		
 		setAlignment(zoneDeJeu, Pos.CENTER);
@@ -64,5 +64,9 @@ public class PanneauDeJeu extends BorderPane {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
+	}
+	
+	public EcouteurSouris getEcouteurSouris() {
+		return controleur;
 	}
 }

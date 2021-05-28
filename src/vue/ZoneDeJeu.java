@@ -29,7 +29,9 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 			cartes[i].setPreserveRatio(true);
 			setConstraints(cartes[i], i, 2);
 			getChildren().add(cartes[i]);
-			cartes[i].setOnMousePressed(controleur::carteCliquee);
+			cartes[i].setOnMousePressed(controleur::dragging);
+			cartes[i].setOnMouseReleased(controleur::stopDragging);
+			//cartes[i].setOnMouseDragReleased(controleur::relacheSurDefausse);
 		}
 	}
 	

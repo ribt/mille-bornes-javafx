@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.EcouteurSouris;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +20,7 @@ public class ZoneMilieu extends GridPane {
 	private Image carteDos = new Image(Carte.class.getResource("/images/Dos.jpg").toString());
 	private Image carteVide = new Image(Carte.class.getResource("/images/CarteVide.jpg").toString());
 	
-	public ZoneMilieu() {
+	public ZoneMilieu(EcouteurSouris controleur) {
 		this.pioche = new ImageView();
 		this.defausse = new ImageView();
 		
@@ -43,6 +44,7 @@ public class ZoneMilieu extends GridPane {
 		defausse.setSmooth(true);  // cosmétique
         defausse.setCache(true); // optimisation
         setConstraints(defausse, 1, 1);
+        setOnMouseDragEntered(controleur::relacheSurDefausse);
         
         this.nbCartes = new Label("xx cartes");
         setConstraints(nbCartes, 0, 2);

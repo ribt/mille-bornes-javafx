@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import modele.cartes.*;
 import modele.cartes.bottes.AsDuVolant;
 import modele.cartes.bottes.Citerne;
@@ -188,7 +190,7 @@ public class EtatJoueur implements Sauvegardable{
 
 		for (Carte cb : main)
 			if (cb.categorie == Categorie.Botte && ((Botte) cb).contre(carte)) {
-				System.out.println("*** Coup-fourré ! ***");
+				new Alert(AlertType.INFORMATION, "Coup fourré !").show();;
 				cb.appliqueEffet(jeu, this);
 				jeu.defausse(carte);
 				jeu.setProchainJoueur(joueur);

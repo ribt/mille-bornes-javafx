@@ -5,7 +5,9 @@ import java.io.IOException;
 import controleur.EcouteurSouris;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -49,6 +51,10 @@ public class PanneauDeJeu extends BorderPane {
 	}
 	
 	public void actualiserAffichage() {
+		if (jeu.estPartieFinie()) {
+			Alert msg = new Alert(AlertType.INFORMATION, "Victoire de "+jeu.getGagnant());
+			msg.show();
+		}
 		milieu.actualiserAffichage(jeu);
 	    zoneDeJeu.actualiserAffichage(jeu.getJoueurActif());
 	    

@@ -1,5 +1,7 @@
 package vue;
 
+import java.util.List;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -7,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import modele.Joueur;
+import modele.cartes.Botte;
 import modele.cartes.Carte;
 
 public class ZoneAffichageJoueur extends GridPane {
@@ -18,6 +21,7 @@ public class ZoneAffichageJoueur extends GridPane {
 	private Image carteLimite = new Image(Carte.class.getResource("/images/LimiteVitesse.jpg").toString());
 	private Image carteFinLimite = new Image(Carte.class.getResource("/images/FinDeLimite.jpg").toString());
 	private Joueur joueur;
+	private ImageView[] bottes = new ImageView[4];
 	
 	public ZoneAffichageJoueur() {
 		this.nom = new Label();
@@ -42,7 +46,15 @@ public class ZoneAffichageJoueur extends GridPane {
         
         setConstraints(compteur, 2, 1);
         
-		getChildren().addAll(nom, limiteVitesse, bataille, compteur);   	 
+		getChildren().addAll(nom, limiteVitesse, bataille, compteur);   
+		
+		for (int i = 0; i < bottes.length; i++) {
+			bottes[i] = new ImageView();
+			bottes[i].setFitHeight(100);
+			bottes[i].setPreserveRatio(true);
+	        setConstraints(bottes[i], 3+i, 1);
+	        getChildren().add(bottes[i]);
+		}
 		
 	}
 	
@@ -60,6 +72,16 @@ public class ZoneAffichageJoueur extends GridPane {
 			bataille.setImage(joueur.getBataille().getImage());
 		
 		compteur.setText(joueur.getKm()+" km");
+		
+		List<Botte> bottesJoueur = joueur.getBottes();
+		
+		for (int i = 0; i < this.bottes.length; i++) {
+			if (i < bottesJoueur.size())
+				this.bottes[i].setImage(bottesJoueur.get(i).getImage());
+			else
+				this.bottes[i].setImage(null);
+		}
+		
 	}
 	
 	public Joueur getJoueur() {

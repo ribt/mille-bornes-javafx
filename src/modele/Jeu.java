@@ -144,44 +144,6 @@ public class Jeu implements Sauvegardable {
   }
 
   /**
-   * Fait jouer le prochain joueur.
-   * <ol>
-   *   <li>active le prochain joueur</li>
-   *   <li>tire une carte pour ce joueur</li>
-   *   <li>fait choisir la carte à jouer/défausser au joueur</li>
-   *   <li>exécute le choix du joueur si possible, ou affiche l'erreur et recommence au 3.</li>
-   * </ol>
-   * @return vrai ssi la partie est terminée : le sabot est vide (le joueur ne peut tirer de 7° carte) ou le joueur a atteint 1000 km.
-   */
-  public boolean joue() {
-    if (prochainJoueur == null) prepareJeu();
-    if (sabot.estVide()) return true;
-
-    if (joueurActif.getMain().size()<7)
-      activeProchainJoueurEtTireCarte();
-
-    System.out.printf("\n-----\n%s%n", this);
-    System.out.println("Votre main : ");
-    List<Carte> main = joueurActif.getMain();
-    int no = 1;
-    for (Carte carte : main) {
-      System.out.printf("%d - %s%n", no++, carte.toString());
-    }
-    int choix;
-    do {
-      choix = joueurActif.choisitCarte();
-      if (choix > 0) try {
-        joueurActif.joueCarte(this, choix - 1);
-      } catch (IllegalStateException ex) {
-        System.err.println(ex.getMessage());
-        choix = 0;
-      } else if (choix < 0)
-        joueurActif.defausseCarte(this, -1 - choix);
-    } while (choix == 0 || choix < -no || choix > +no);
-    return joueurActif.getKm() == 1000;
-  } // joue()
-
-  /**
    * Active le joueur suivant de la partie et lui fait tirer une carte si la partie n'est pas terminée.
    */
   public void activeProchainJoueurEtTireCarte() {

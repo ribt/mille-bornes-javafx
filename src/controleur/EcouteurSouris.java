@@ -30,7 +30,7 @@ public class EcouteurSouris {
 	}
 	
 	public void carteCliquee(MouseEvent event) {
-		scene.setCursor(Cursor.CLOSED_HAND);
+		scene.setCursor(Cursor.MOVE);
 		this.carteSelectionne = GridPane.getColumnIndex((Node) event.getSource());
 	}
 	

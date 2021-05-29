@@ -41,8 +41,6 @@ public class Gentil extends Joueur {
   /** Le numéro d'une carte inutile */
   private int aEcarterIdx;
 
-
-  @Override
   public int choisitCarte() {
     List<Carte> main = getMain();
     Bataille bat = getBataille();
@@ -151,7 +149,6 @@ public class Gentil extends Joueur {
     return null;
   }
 
-  @Override
   public Joueur choisitAdversaire(Attaque carte) {
     return getProchainJoueur(); // Jamais utilisée
   }

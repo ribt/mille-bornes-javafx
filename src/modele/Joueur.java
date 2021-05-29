@@ -163,19 +163,4 @@ public abstract class Joueur implements Sauvegardable {
     return etat.getBottes();
   }
 
-  /**
-   * Choisit la carte à jouer.
-   * Attention aux exceptions : {@link InputMismatchException} et {@link NoSuchElementException}
-   * @return un entier entre -7 et +7 permettant de défausser (&lt;0) ou de jouer (&gt;0) la carte correspondante
-   */
-  public abstract int choisitCarte();
-
-  /**
-   * Choisit l'adversaire à attaquer
-   * @param carte l'attaque qui sera portée sur cet adversaire
-   * @return le Joueur choisi
-   * @throws IllegalStateException si le joueur décide d'annuler son attaque
-   */
-  public abstract Joueur choisitAdversaire(Attaque carte);
-
 } // class Joueur

@@ -41,20 +41,26 @@ public class EcouteurSouris {
 		try {
 			if (cible != null) {
 				Joueur joueurVise = null;
-				if (cible instanceof ZoneAffichageJoueur)
+				if (cible instanceof ZoneAffichageJoueur) {
 					joueurVise = ((ZoneAffichageJoueur) cible).getJoueur();
-				if (cible.getParent() instanceof ZoneAffichageJoueur)
+				} else if (cible.getParent() instanceof ZoneAffichageJoueur) {
 					joueurVise = ((ZoneAffichageJoueur) cible.getParent()).getJoueur();
-				
-				if (joueurVise != null) {
-					if (joueurVise == jeu.getJoueurActif())
-						jeu.getJoueurActif().joueCarte(jeu, carteSelectionne);
-					else
-						jeu.getJoueurActif().joueCarte(jeu, carteSelectionne, joueurVise);
 				}
 				
-				if (cible instanceof Defausse)
+				if (joueurVise != null) {
+					if (joueurVise == jeu.getJoueurActif()) {
+						jeu.getJoueurActif().joueCarte(jeu, carteSelectionne);
+						jeu.activeProchainJoueurEtTireCarte();
+					} else {
+						jeu.getJoueurActif().joueCarte(jeu, carteSelectionne, joueurVise);
+						jeu.activeProchainJoueurEtTireCarte();
+					}
+				}
+				
+				if (cible instanceof Defausse) {
 					jeu.getJoueurActif().defausseCarte(jeu, carteSelectionne);
+					jeu.activeProchainJoueurEtTireCarte();
+				}
 			}
 		} catch (IllegalStateException e) {
 			Alert msg = new Alert(AlertType.ERROR, e.getMessage());

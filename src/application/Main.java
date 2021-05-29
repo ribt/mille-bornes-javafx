@@ -31,6 +31,7 @@ public class Main extends Application {
 		
 		jeu.ajouteJoueurs(j1, j2);
 		jeu.prepareJeu();
+		jeu.activeProchainJoueurEtTireCarte();
 		
 		panneau.actualiserAffichage();
 		stage.sizeToScene();

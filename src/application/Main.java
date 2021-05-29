@@ -22,8 +22,8 @@ public class Main extends Application {
 		Scene scene = new Scene(panneau);
 		panneau.getControleur().setScene(scene);
 		Joueur j1 = new Humain("Pierre");
-		Joueur j2 = new Humain("Paul");
-		Joueur j3 = new Gentil("Bot");
+		Joueur j2 = new Gentil("Bot 1");
+		Joueur j3 = new Gentil("Bot 2");
 		 
 		stage.setScene(scene);
 		stage.sizeToScene();

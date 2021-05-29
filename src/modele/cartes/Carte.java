@@ -19,6 +19,9 @@ public abstract class Carte implements Sauvegardable {
 	public final String nom;
 	/** La catégorie de la carte */
 	public final Categorie categorie;
+	
+	public final static Image imageVide = new Image(Carte.class.getResource("/images/CarteVide.jpg").toString());
+	public final static Image imageDos = new Image(Carte.class.getResource("/images/Dos.jpg").toString());
 
 	private Image image;
 

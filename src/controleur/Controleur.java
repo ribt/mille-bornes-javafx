@@ -22,7 +22,10 @@ public class Controleur {
 	private PanneauDeJeu panneau;
 	private Scene scene;
 	private int carteSelectionne = -1;
-	private boolean transitionEnCours;
+	private boolean piocheEnCours;
+	private boolean simulationEnCours;
+	private int choixBot;
+	private Joueur cibleBot;
 
 	public Controleur(Jeu jeu, PanneauDeJeu panneau) {
 		this.jeu = jeu;
@@ -34,7 +37,7 @@ public class Controleur {
 	}
 	
 	public void carteCliquee(MouseEvent event) {
-		if (transitionEnCours) {
+		if (piocheEnCours || simulationEnCours) {
 			event.consume();
 			return;
 		}
@@ -43,7 +46,7 @@ public class Controleur {
 	}
 	
 	public void carteRelachee(MouseEvent event) {
-		if (transitionEnCours) {
+		if (piocheEnCours || simulationEnCours) {
 			event.consume();
 			return;
 		}
@@ -86,6 +89,7 @@ public class Controleur {
 	public void tourSuivant() {
 		jeu.activeProchainJoueur();
 		panneau.actualiserAffichage();
+		piocheEnCours = true;
 		panneau.animationPioche();		
 	}
 	
@@ -95,28 +99,44 @@ public class Controleur {
 		
 		if (jeu.getJoueurActif() instanceof Gentil) {
 			Gentil bot = (Gentil) jeu.getJoueurActif();
+			Carte carte;
 			int choix = bot.choisitCarte();
 			if (choix < 0) {
-				bot.defausseCarte(jeu, -choix+1);
+				simulationEnCours = true;
+				this.choixBot = -choix+1;
+				this.cibleBot = null;
+				panneau.simulerDefausse(-choix+1);
 			} else {
-				Carte carte = bot.getMain().get(choix-1);
-				if (carte instanceof Attaque)
-					bot.joueCarte(jeu, choix-1, bot.choisitAdversaire((Attaque) carte));
-				else
-					bot.joueCarte(jeu, choix-1);
-			}
-			panneau.actualiserAffichage(); // TODO : faire une jolie transition
-			tourSuivant();			
+				carte = bot.getMain().get(choix-1);
+				if (carte instanceof Attaque) {
+					simulationEnCours = true;
+					this.choixBot = choix-1;
+					this.cibleBot = bot.choisitAdversaire((Attaque) carte);
+					panneau.simulerAttaque(choix-1, cibleBot);
+				} else {
+					simulationEnCours = true;
+					this.choixBot = choix-1;
+					this.cibleBot = bot;
+					panneau.simulerAttaque(choix-1, bot);
+				}
+			}			
 		}
 	}
 	
-	public void debutAnimation() {
-		transitionEnCours = true;
-	}
-	
 	public void finAnimation() {
-		transitionEnCours = false;
-		jouerTour();
+		if (piocheEnCours) {
+			piocheEnCours = false;
+			jouerTour();
+		} else if (simulationEnCours) {
+			simulationEnCours = false;
+			if (cibleBot == null)
+				jeu.getJoueurActif().defausseCarte(jeu, choixBot);
+			else if (cibleBot == jeu.getJoueurActif())
+				jeu.getJoueurActif().joueCarte(jeu, choixBot);
+			else
+				jeu.getJoueurActif().joueCarte(jeu, choixBot, cibleBot);
+			tourSuivant();
+		}
 	}
 
 }

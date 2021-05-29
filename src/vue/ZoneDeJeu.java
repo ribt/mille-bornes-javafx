@@ -48,9 +48,13 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 		}
 	}
 	
-	public Point2D getPositionDernierecarte() {
-		Bounds bounds = cartes[6].localToScene(cartes[6].getBoundsInLocal());
+	public Point2D getPositionCarte(int i) {
+		Bounds bounds = cartes[i].localToScene(cartes[i].getBoundsInLocal());
 		return new Point2D(bounds.getMaxX(), bounds.getMinY());
+	}
+	
+	public void cacherCarte(int i) {
+		cartes[i].setImage(Carte.imageVide);
 	}
 
 }

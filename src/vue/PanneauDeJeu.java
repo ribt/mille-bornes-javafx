@@ -8,11 +8,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Jeu;
+import modele.Joueur;
+import modele.cartes.Carte;
 
 public class PanneauDeJeu extends StackPane {
 	private Jeu jeu;
@@ -89,6 +92,26 @@ public class PanneauDeJeu extends StackPane {
 	}
 	
 	public void animationPioche() {
-		premierPlan.animation(milieu.getPositionPioche(), zoneDeJeu.getPositionDernierecarte());
+		premierPlan.animation(Carte.imageDos, milieu.getPositionPioche(), zoneDeJeu.getPositionCarte(6));
+	}
+	
+	public void simulerDefausse(int choix) {
+		zoneDeJeu.cacherCarte(choix);
+		premierPlan.animation(jeu.getJoueurActif().getMain().get(choix).getImage(), zoneDeJeu.getPositionCarte(choix), milieu.getPositionDefausse());
+	}
+	
+	public void simulerAttaque(int choix, Joueur cible) {
+		ZoneAffichageJoueur zoneCible;
+		if (cible == jeu.getJoueurActif())
+			zoneCible = zoneDeJeu;
+		else if (cible == affJoueurHaut.getJoueur())
+			zoneCible = affJoueurHaut;
+		else if (cible == affJoueurGauche.getJoueur())
+			zoneCible = affJoueurGauche;
+		else
+			zoneCible = affJoueurDroite;
+		
+		zoneDeJeu.cacherCarte(choix);
+		premierPlan.animation(jeu.getJoueurActif().getMain().get(choix).getImage(), zoneDeJeu.getPositionCarte(choix), zoneCible.getPositionBataille());
 	}
 }

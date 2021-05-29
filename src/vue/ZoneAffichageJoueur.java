@@ -2,8 +2,10 @@ package vue;
 
 import java.util.List;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -91,6 +93,11 @@ public class ZoneAffichageJoueur extends GridPane {
 	
 	public Joueur getJoueur() {
 		return joueur;
+	}
+	
+	public Point2D getPositionBataille() {
+		Bounds bounds = bataille.localToScene(bataille.getBoundsInLocal());
+		return new Point2D(bounds.getMinX(), bounds.getMinY());
 	}
 
 }

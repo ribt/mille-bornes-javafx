@@ -1,5 +1,10 @@
 package vue;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 import controleur.Controleur;
 import javafx.animation.*;
 import javafx.animation.KeyFrame;
@@ -22,14 +27,13 @@ public class PremierPlan extends Pane {
 		cadre = new ImageView();
 		cadre.setFitHeight(120);
 		cadre.setPreserveRatio(true);
-		cadre.setImage(new Image(Carte.class.getResource("/images/Dos.jpg").toString()));
 	}
 	
-	public void animation(Point2D debut, Point2D fin) {
+	public void animation(Image img, Point2D debut, Point2D fin) {
 		if (getChildren().contains(cadre))
 			return;
-		controleur.debutAnimation();
 		getChildren().add(cadre);
+		cadre.setImage(img);
 		cadre.setX(debut.getX());
 		cadre.setY(debut.getY());
 		cadre.setLayoutX(0);

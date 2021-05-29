@@ -6,6 +6,10 @@ import controleur.EcouteurSouris;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import modele.Joueur;
 import modele.cartes.Carte;
 
@@ -29,9 +33,20 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 			cartes[i].setPreserveRatio(true);
 			setConstraints(cartes[i], i, 2);
 			getChildren().add(cartes[i]);
-			cartes[i].setOnMousePressed(controleur::dragging);
-			cartes[i].setOnMouseReleased(controleur::stopDragging);
-			//cartes[i].setOnMouseDragReleased(controleur::relacheSurDefausse);
+			
+			//cartes[i].setOnMouseReleased(controleur::carteRelachee);
+//			cartes[i].setOnMouseDragReleased(controleur::relacheSurDefausse);
+//			cartes[i].setOnDragDetected(controleur::dragDetected);
+//			cartes[i].setOnDragDone(controleur::dragDone);
+//			cartes[i].addEventHandler(EventType.ROOT, new EventHandler<Event>() {
+//				public void handle(Event e) {
+//					System.out.println(e.getEventType());
+//					if (e.getEventType() == MouseEvent.DRAG_DETECTED)
+//						((ImageView)e.getSource()).startFullDrag();
+//				}
+//			});
+			cartes[i].setOnDragDetected(controleur::carteAtrapee);
+			cartes[i].setOnDragDone(controleur::carteRelachee);
 		}
 	}
 	

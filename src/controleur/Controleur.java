@@ -22,6 +22,7 @@ public class Controleur {
 	private PanneauDeJeu panneau;
 	private Scene scene;
 	private int carteSelectionne = -1;
+	private boolean transitionEnCours;
 
 	public Controleur(Jeu jeu, PanneauDeJeu panneau) {
 		this.jeu = jeu;
@@ -33,11 +34,20 @@ public class Controleur {
 	}
 	
 	public void carteCliquee(MouseEvent event) {
+		if (transitionEnCours) {
+			event.consume();
+			return;
+		}
 		scene.setCursor(Cursor.MOVE);
 		this.carteSelectionne = GridPane.getColumnIndex((ImageView) event.getSource());
 	}
 	
 	public void carteRelachee(MouseEvent event) {
+		if (transitionEnCours) {
+			event.consume();
+			return;
+		}
+		
 		scene.setCursor(Cursor.DEFAULT);
 		Node cible = event.getPickResult().getIntersectedNode();
 		
@@ -74,7 +84,15 @@ public class Controleur {
 	}
 	
 	public void tourSuivant() {
-		jeu.activeProchainJoueurEtTireCarte();
+		jeu.activeProchainJoueur();
+		panneau.actualiserAffichage();
+		panneau.animationPioche();		
+	}
+	
+	private void jouerTour() {
+		jeu.tireCarte();
+		panneau.actualiserAffichage();
+		
 		if (jeu.getJoueurActif() instanceof Gentil) {
 			Gentil bot = (Gentil) jeu.getJoueurActif();
 			int choix = bot.choisitCarte();
@@ -88,10 +106,17 @@ public class Controleur {
 					bot.joueCarte(jeu, choix-1);
 			}
 			panneau.actualiserAffichage(); // TODO : faire une jolie transition
-			jeu.activeProchainJoueurEtTireCarte();
-			panneau.actualiserAffichage();
-			
+			tourSuivant();			
 		}
+	}
+	
+	public void debutAnimation() {
+		transitionEnCours = true;
+	}
+	
+	public void finAnimation() {
+		transitionEnCours = false;
+		jouerTour();
 	}
 
 }

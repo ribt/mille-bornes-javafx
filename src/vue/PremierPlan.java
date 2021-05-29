@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.Controleur;
 import javafx.animation.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,10 +13,12 @@ import modele.cartes.Carte;
 
 public class PremierPlan extends Pane {
 	private final ImageView cadre;
+	private Controleur controleur;
 
-	public PremierPlan() {
-		setPickOnBounds(false); // transmet l'évnènement souris s'il a lieu sur les parties vides du panneau
+	public PremierPlan(Controleur controleur) {
+		this.controleur = controleur;
 		
+		setPickOnBounds(false); // transmet l'évnènement souris s'il a lieu sur les parties vides du panneau
 		cadre = new ImageView();
 		cadre.setFitHeight(120);
 		cadre.setPreserveRatio(true);
@@ -25,6 +28,7 @@ public class PremierPlan extends Pane {
 	public void animation(Point2D debut, Point2D fin) {
 		if (getChildren().contains(cadre))
 			return;
+		controleur.debutAnimation();
 		getChildren().add(cadre);
 		cadre.setX(debut.getX());
 		cadre.setY(debut.getY());
@@ -36,6 +40,9 @@ public class PremierPlan extends Pane {
 		    new KeyFrame(Duration.seconds(1.5), new KeyValue(cadre.layoutYProperty(), fin.getY()-debut.getY(), Interpolator.LINEAR)));
 		line.setCycleCount(1);
 		line.play();
-		line.setOnFinished(event -> getChildren().remove(cadre));
+		line.setOnFinished(event -> {
+			getChildren().remove(cadre);
+			controleur.finAnimation();
+		});
 	}
 }

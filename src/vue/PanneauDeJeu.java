@@ -29,13 +29,14 @@ public class PanneauDeJeu extends StackPane {
 	public PanneauDeJeu(Jeu jeu, Stage stage) {
 		this.jeu = jeu;
 		this.stage = stage;
-		this.premierPlan = new PremierPlan();
+		this.controleur = new Controleur(jeu, this);
+		this.premierPlan = new PremierPlan(controleur);
 		this.secondPlan = new BorderPane();
 		
         getChildren().addAll(premierPlan, secondPlan);
         premierPlan.toFront();
 		
-		controleur = new Controleur(jeu, this);
+		
 		affJoueurHaut = new ZoneAffichageJoueur("haut");
 		affJoueurDroite = new ZoneAffichageJoueur("droite");
 		affJoueurGauche = new ZoneAffichageJoueur("gauche");

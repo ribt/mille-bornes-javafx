@@ -33,9 +33,8 @@ public class Main extends Application {
 		
 		jeu.ajouteJoueurs(j1, j2, j3);
 		jeu.prepareJeu();
-		jeu.activeProchainJoueurEtTireCarte();
+		panneau.getControleur().tourSuivant();
 		
-		panneau.actualiserAffichage();
 		stage.sizeToScene();
 	}	
 }

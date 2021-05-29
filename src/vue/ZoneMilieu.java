@@ -1,9 +1,6 @@
 package vue;
 
 import controleur.EcouteurSouris;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import modele.Jeu;
 import modele.cartes.Carte;
@@ -26,7 +22,7 @@ public class ZoneMilieu extends GridPane {
 	
 	public ZoneMilieu(EcouteurSouris controleur) {
 		this.pioche = new ImageView();
-		this.defausse = new ImageView();
+		this.defausse = new Defausse();
 		
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(50, 20, 20, 20)); // top, right, bottom, left
@@ -48,13 +44,6 @@ public class ZoneMilieu extends GridPane {
 		defausse.setSmooth(true);  // cosmétique
         defausse.setCache(true); // optimisation
         setConstraints(defausse, 1, 1);
-        defausse.setOnMouseDragEntered(controleur::dragSurDefausse);
-        defausse.setOnDragDropped(controleur::relacheSurDefausse);
-        defausse.addEventHandler(EventType.ROOT, new EventHandler<Event>() {
-			public void handle(Event e) {
-				System.out.println("défausse : "+e.getEventType());
-			}
-		});
         
         this.nbCartes = new Label("xx cartes");
         setConstraints(nbCartes, 0, 2);

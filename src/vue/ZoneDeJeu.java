@@ -6,21 +6,14 @@ import controleur.EcouteurSouris;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import modele.Joueur;
 import modele.cartes.Carte;
 
 public class ZoneDeJeu extends ZoneAffichageJoueur {
-	private ImageView[] cartes =  new ImageView[7];
-	private final EcouteurSouris controleur;
+	private ImageView[] cartes = new ImageView[7];
 	
 	public ZoneDeJeu(EcouteurSouris controleur) {
 		super();
-		
-		this.controleur = controleur;
 		
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left
@@ -34,19 +27,8 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 			setConstraints(cartes[i], i, 2);
 			getChildren().add(cartes[i]);
 			
-			//cartes[i].setOnMouseReleased(controleur::carteRelachee);
-//			cartes[i].setOnMouseDragReleased(controleur::relacheSurDefausse);
-//			cartes[i].setOnDragDetected(controleur::dragDetected);
-//			cartes[i].setOnDragDone(controleur::dragDone);
-//			cartes[i].addEventHandler(EventType.ROOT, new EventHandler<Event>() {
-//				public void handle(Event e) {
-//					System.out.println(e.getEventType());
-//					if (e.getEventType() == MouseEvent.DRAG_DETECTED)
-//						((ImageView)e.getSource()).startFullDrag();
-//				}
-//			});
-			cartes[i].setOnDragDetected(controleur::carteAtrapee);
-			cartes[i].setOnDragDone(controleur::carteRelachee);
+			cartes[i].setOnMousePressed(controleur::carteCliquee);
+			cartes[i].setOnMouseReleased(controleur::carteRelachee);
 		}
 	}
 	
@@ -56,10 +38,11 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 		
 		List<Carte> main = joueur.getMain();
 		
-		cartes[6].setImage(null); // au minimum le joueur a 6 cartes
-		
-		for (int i = 0; i < main.size(); i++) {
-			cartes[i].setImage(main.get(i).getImage());
+		for (int i = 0; i < 7; i++) {
+			if (i < main.size())
+				cartes[i].setImage(main.get(i).getImage());
+			else
+				cartes[i].setImage(null);
 		}
 	}
 

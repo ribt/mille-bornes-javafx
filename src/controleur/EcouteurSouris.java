@@ -3,20 +3,18 @@ package controleur;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import modele.Jeu;
+import vue.Defausse;
 import vue.PanneauDeJeu;
 
 public class EcouteurSouris {
 	private Jeu jeu;
 	private PanneauDeJeu panneau;
 	private Scene scene;
+	private int carteSelectionne = -1;
 
 	public EcouteurSouris(Jeu jeu, PanneauDeJeu panneau) {
 		this.jeu = jeu;
@@ -27,25 +25,23 @@ public class EcouteurSouris {
 		this.scene = scene;
 	}
 	
-	public void carteAtrapee(MouseEvent event) {
+	public void carteCliquee(MouseEvent event) {
 		scene.setCursor(Cursor.CLOSED_HAND);
-		ImageView img = (ImageView) event.getSource();
-		img.startDragAndDrop(TransferMode.ANY);
-		System.out.println("début du drag");
+		this.carteSelectionne = GridPane.getColumnIndex((Node) event.getSource());
 	}
 	
-	public void carteRelachee(DragEvent event) {
+	public void carteRelachee(MouseEvent event) {
 		scene.setCursor(Cursor.DEFAULT);
-		System.out.println("dropped :"+event);
+		Node cible = event.getPickResult().getIntersectedNode();
+		
+		if (cible != null) {
+			if (cible instanceof Defausse)
+				jeu.getJoueurActif().defausseCarte(jeu, carteSelectionne);
+		}
+		
+		this.carteSelectionne = -1;
+		panneau.actualiserAffichage();
 	}
 	
-	public void dragSurDefausse(MouseEvent event) {
-		System.out.println(event);
-		//((Node)event.getSource()).startDragAndDrop();
-	}
-	
-	public void relacheSurDefausse(DragEvent event) {
-		scene.setCursor(Cursor.DEFAULT);
-		System.out.println(event);
-	}
+
 }

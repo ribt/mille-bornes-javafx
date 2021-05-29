@@ -20,7 +20,6 @@ public class ZoneAffichageJoueur extends GridPane {
 	private ImageView limiteVitesse;
 	private ImageView bataille;
 	private Label compteur;
-	private Image carteVide = new Image(Carte.class.getResource("/images/CarteVide.jpg").toString());
 	private Image carteLimite = new Image(Carte.class.getResource("/images/LimiteVitesse.jpg").toString());
 	private Image carteFinLimite = new Image(Carte.class.getResource("/images/FinDeLimite.jpg").toString());
 	private Joueur joueur;
@@ -74,7 +73,7 @@ public class ZoneAffichageJoueur extends GridPane {
 			limiteVitesse.setImage(carteFinLimite);
 			
 		if (joueur.getBataille() == null)
-			bataille.setImage(carteVide);
+			bataille.setImage(Carte.imageVide);
 		else
 			bataille.setImage(joueur.getBataille().getImage());
 		

@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import modele.Joueur;
 import modele.cartes.Carte;
+import modele.joueurs.Humain;
 
 public class ZoneDeJeu extends ZoneAffichageJoueur {
 	private ImageView[] cartes = new ImageView[7];
@@ -41,10 +42,14 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 		List<Carte> main = joueur.getMain();
 		
 		for (int i = 0; i < 7; i++) {
-			if (i < main.size())
-				cartes[i].setImage(main.get(i).getImage());
-			else
+			if (i < main.size()) {
+				if (joueur instanceof Humain)
+					cartes[i].setImage(main.get(i).getImage());
+				else
+					cartes[i].setImage(Carte.imageDos);
+			} else {
 				cartes[i].setImage(null);
+			}
 		}
 	}
 	

@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import modele.Jeu;
@@ -19,12 +18,10 @@ public class ZoneMilieu extends GridPane {
 	private ImageView pioche;
 	private ImageView defausse;
 	private Label nbCartes;
-	private Image carteDos = new Image(Carte.class.getResource("/images/Dos.jpg").toString());
-	private Image carteVide = new Image(Carte.class.getResource("/images/CarteVide.jpg").toString());
 	
 	public ZoneMilieu(Controleur controleur) {
-		this.pioche = new ImageView();
-		this.defausse = new Defausse();
+		this.pioche = new ImageView(Carte.imageDos);
+		this.defausse = new Defausse(); // la classe est juste une ImageView mais je peux utiliser "instanceof Defausse" plus loin
 		
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(50, 20, 20, 20)); // top, right, bottom, left
@@ -60,9 +57,8 @@ public class ZoneMilieu extends GridPane {
 	
 	public void actualiserAffichage(Jeu jeu) {
 		nbCartes.setText(jeu.getNbCartesSabot()+" cartes");
-		pioche.setImage(carteDos); // TODO : dans le constructeur
 		if (jeu.regardeDefausse() == null)
-			defausse.setImage(carteVide);
+			defausse.setImage(Carte.imageVide);
 		else
 			defausse.setImage(jeu.regardeDefausse().getImage());
 	}

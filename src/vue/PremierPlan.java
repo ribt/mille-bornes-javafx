@@ -1,10 +1,5 @@
 package vue;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-
 import controleur.Controleur;
 import javafx.animation.*;
 import javafx.animation.KeyFrame;
@@ -14,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import modele.cartes.Carte;
 
 public class PremierPlan extends Pane {
 	private final ImageView cadre;

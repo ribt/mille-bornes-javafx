@@ -2,8 +2,10 @@ package vue;
 
 import java.util.List;
 
-import controleur.EcouteurSouris;
+import controleur.Controleur;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import modele.Joueur;
@@ -12,7 +14,7 @@ import modele.cartes.Carte;
 public class ZoneDeJeu extends ZoneAffichageJoueur {
 	private ImageView[] cartes = new ImageView[7];
 	
-	public ZoneDeJeu(EcouteurSouris controleur) {
+	public ZoneDeJeu(Controleur controleur) {
 		super("bas");
 		
 		setAlignment(Pos.CENTER);
@@ -44,6 +46,11 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 			else
 				cartes[i].setImage(null);
 		}
+	}
+	
+	public Point2D getPositionDernierecarte() {
+		Bounds bounds = cartes[6].localToScene(cartes[6].getBoundsInLocal());
+		return new Point2D(bounds.getMaxX(), bounds.getMinY());
 	}
 
 }

@@ -2,83 +2,64 @@ package vue;
 
 import java.io.IOException;
 
-import controleur.EcouteurSouris;
+import controleur.Controleur;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Jeu;
-import modele.cartes.Attaque;
-import modele.cartes.Carte;
-import modele.joueurs.Gentil;
 
-public class PanneauDeJeu extends BorderPane {
+public class PanneauDeJeu extends StackPane {
 	private Jeu jeu;
 	private ZoneDeJeu zoneDeJeu;
 	private ZoneAffichageJoueur affJoueurHaut;
 	private ZoneAffichageJoueur affJoueurDroite;
 	private ZoneAffichageJoueur affJoueurGauche;
 	private ZoneMilieu milieu;
-	private EcouteurSouris controleur;
+	private Controleur controleur;
 	private Stage stage;
+	private PremierPlan premierPlan;
+	private BorderPane secondPlan;
 
 	public PanneauDeJeu(Jeu jeu, Stage stage) {
 		this.jeu = jeu;
 		this.stage = stage;
+		this.premierPlan = new PremierPlan();
+		this.secondPlan = new BorderPane();
 		
-		controleur = new EcouteurSouris(jeu, this);
+        getChildren().addAll(premierPlan, secondPlan);
+        premierPlan.toFront();
+		
+		controleur = new Controleur(jeu, this);
 		affJoueurHaut = new ZoneAffichageJoueur("haut");
 		affJoueurDroite = new ZoneAffichageJoueur("droite");
 		affJoueurGauche = new ZoneAffichageJoueur("gauche");
 		milieu = new ZoneMilieu(controleur);
 		zoneDeJeu = new ZoneDeJeu(controleur);	
 		
-		setAlignment(zoneDeJeu, Pos.CENTER);
-		setBottom(zoneDeJeu);
+		secondPlan.setAlignment(zoneDeJeu, Pos.CENTER);
+		secondPlan.setBottom(zoneDeJeu);
 	    
-		setAlignment(affJoueurDroite, Pos.CENTER);
-		setRight(affJoueurDroite);
-		setAlignment(affJoueurGauche, Pos.CENTER);
-	    setLeft(affJoueurGauche);
-	    setCenter(milieu);
+		secondPlan.setAlignment(affJoueurDroite, Pos.CENTER);
+		secondPlan.setRight(affJoueurDroite);
+		secondPlan.setAlignment(affJoueurGauche, Pos.CENTER);
+		secondPlan.setLeft(affJoueurGauche);
+		secondPlan.setCenter(milieu);
 	    
 	    try {
 			MenuBar menus = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml")).load();
-			setTop(new VBox(10, menus, affJoueurHaut));
+			secondPlan.setTop(new VBox(10, menus, affJoueurHaut));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void actualiserAffichage() {
-		actualiserAutres();
-		if (jeu.estPartieFinie()) {
-			Alert msg = new Alert(AlertType.INFORMATION, "Victoire de "+jeu.getGagnant());
-			msg.show();
-		} else if (jeu.getJoueurActif() instanceof Gentil) {
-			Gentil bot = (Gentil) jeu.getJoueurActif();
-			int choix = bot.choisitCarte();
-			if (choix < 0) {
-				bot.defausseCarte(jeu, -choix+1);
-			} else {
-				Carte carte = bot.getMain().get(choix-1);
-				if (carte instanceof Attaque)
-					bot.joueCarte(jeu, choix-1, bot.choisitAdversaire((Attaque) carte));
-				else
-					bot.joueCarte(jeu, choix-1);
-			}
-			actualiserAutres(); // TODO : faire une jolie transition
-			jeu.activeProchainJoueurEtTireCarte();
-			actualiserAffichage();
-		}
-		stage.sizeToScene();
-	}
-	
-	private void actualiserAutres() {
 		milieu.actualiserAffichage(jeu);
 	    zoneDeJeu.actualiserAffichage(jeu.getJoueurActif());
 	    
@@ -94,9 +75,19 @@ public class PanneauDeJeu extends BorderPane {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
+	    stage.sizeToScene();
+	    
+		if (jeu.estPartieFinie()) {
+			Alert msg = new Alert(AlertType.INFORMATION, "Victoire de "+jeu.getGagnant());
+			msg.show();
+		}
 	}
 	
-	public EcouteurSouris getEcouteurSouris() {
+	public Controleur getControleur() {
 		return controleur;
+	}
+	
+	public void animationPioche() {
+		premierPlan.animation(milieu.getPositionPioche(), zoneDeJeu.getPositionDernierecarte());
 	}
 }

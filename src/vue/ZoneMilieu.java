@@ -1,8 +1,10 @@
 package vue;
 
-import controleur.EcouteurSouris;
+import controleur.Controleur;
+import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -20,7 +22,7 @@ public class ZoneMilieu extends GridPane {
 	private Image carteDos = new Image(Carte.class.getResource("/images/Dos.jpg").toString());
 	private Image carteVide = new Image(Carte.class.getResource("/images/CarteVide.jpg").toString());
 	
-	public ZoneMilieu(EcouteurSouris controleur) {
+	public ZoneMilieu(Controleur controleur) {
 		this.pioche = new ImageView();
 		this.defausse = new Defausse();
 		
@@ -63,5 +65,10 @@ public class ZoneMilieu extends GridPane {
 			defausse.setImage(carteVide);
 		else
 			defausse.setImage(jeu.regardeDefausse().getImage());
+	}
+	
+	public Point2D getPositionPioche() {
+		Bounds bounds = pioche.localToScene(pioche.getBoundsInLocal());
+		return new Point2D(bounds.getMinX(), bounds.getMinY());
 	}
 }

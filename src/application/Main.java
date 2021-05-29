@@ -20,7 +20,7 @@ public class Main extends Application {
 		Jeu jeu = new Jeu();		
 		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
 		Scene scene = new Scene(panneau);
-		panneau.getEcouteurSouris().setScene(scene);
+		panneau.getControleur().setScene(scene);
 		Joueur j1 = new Humain("Pierre");
 		Joueur j2 = new Humain("Paul");
 		Joueur j3 = new Gentil("Bot");

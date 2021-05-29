@@ -8,9 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Jeu;
@@ -33,9 +31,9 @@ public class PanneauDeJeu extends BorderPane {
 		this.stage = stage;
 		
 		controleur = new EcouteurSouris(jeu, this);
-		affJoueurHaut = new ZoneAffichageJoueur();
-		affJoueurDroite = new ZoneAffichageJoueur();
-		affJoueurGauche = new ZoneAffichageJoueur();
+		affJoueurHaut = new ZoneAffichageJoueur("haut");
+		affJoueurDroite = new ZoneAffichageJoueur("droite");
+		affJoueurGauche = new ZoneAffichageJoueur("gauche");
 		milieu = new ZoneMilieu(controleur);
 		zoneDeJeu = new ZoneDeJeu(controleur);	
 		

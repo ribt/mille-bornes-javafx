@@ -13,7 +13,7 @@ public class ZoneDeJeu extends ZoneAffichageJoueur {
 	private ImageView[] cartes = new ImageView[7];
 	
 	public ZoneDeJeu(EcouteurSouris controleur) {
-		super();
+		super("bas");
 		
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(0, 20, 10, 20)); // top, right, bottom, left

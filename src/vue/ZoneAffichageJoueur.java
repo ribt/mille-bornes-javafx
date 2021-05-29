@@ -3,6 +3,7 @@ package vue;
 import java.util.List;
 
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -23,7 +24,7 @@ public class ZoneAffichageJoueur extends GridPane {
 	private Joueur joueur;
 	private ImageView[] bottes = new ImageView[4];
 	
-	public ZoneAffichageJoueur() {
+	public ZoneAffichageJoueur(String position) {
 		this.nom = new Label();
 		this.limiteVitesse = new ImageView();
 		this.bataille = new ImageView();
@@ -32,6 +33,7 @@ public class ZoneAffichageJoueur extends GridPane {
 		setAlignment(Pos.CENTER);
 		setHgap(5);
 		setVgap(5);
+		setPadding(new Insets(20, 20, 20, 20)); // top, right, bottom, left
 		
 		setConstraints(nom, 0, 0, 3, 1); // columnIndex, rowIndex, colspan, rowspan
 		setHalignment(nom, HPos.CENTER);
@@ -52,7 +54,10 @@ public class ZoneAffichageJoueur extends GridPane {
 			bottes[i] = new ImageView();
 			bottes[i].setFitHeight(100);
 			bottes[i].setPreserveRatio(true);
-	        setConstraints(bottes[i], 3+i, 1);
+			if (position.equals("haut") || position.equals("bas"))
+				setConstraints(bottes[i], 3+i, 1); // bottes sur la même ligne
+			else
+				setConstraints(bottes[i], i, 2); // bottes sur une autre ligne
 	        getChildren().add(bottes[i]);
 		}
 		

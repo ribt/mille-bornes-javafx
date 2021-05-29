@@ -12,7 +12,11 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import modele.Jeu;
+import modele.cartes.Attaque;
+import modele.cartes.Carte;
+import modele.joueurs.Gentil;
 
 public class PanneauDeJeu extends BorderPane {
 	private Jeu jeu;
@@ -22,9 +26,11 @@ public class PanneauDeJeu extends BorderPane {
 	private ZoneAffichageJoueur affJoueurGauche;
 	private ZoneMilieu milieu;
 	private EcouteurSouris controleur;
+	private Stage stage;
 
-	public PanneauDeJeu(Jeu jeu) {
+	public PanneauDeJeu(Jeu jeu, Stage stage) {
 		this.jeu = jeu;
+		this.stage = stage;
 		
 		controleur = new EcouteurSouris(jeu, this);
 		affJoueurHaut = new ZoneAffichageJoueur();
@@ -51,10 +57,30 @@ public class PanneauDeJeu extends BorderPane {
 	}
 	
 	public void actualiserAffichage() {
+		actualiserAutres();
 		if (jeu.estPartieFinie()) {
 			Alert msg = new Alert(AlertType.INFORMATION, "Victoire de "+jeu.getGagnant());
 			msg.show();
+		} else if (jeu.getJoueurActif() instanceof Gentil) {
+			Gentil bot = (Gentil) jeu.getJoueurActif();
+			int choix = bot.choisitCarte();
+			if (choix < 0) {
+				bot.defausseCarte(jeu, -choix+1);
+			} else {
+				Carte carte = bot.getMain().get(choix-1);
+				if (carte instanceof Attaque)
+					bot.joueCarte(jeu, choix-1, bot.choisitAdversaire((Attaque) carte));
+				else
+					bot.joueCarte(jeu, choix-1);
+			}
+			actualiserAutres(); // TODO : faire une jolie transition
+			jeu.activeProchainJoueurEtTireCarte();
+			actualiserAffichage();
 		}
+		stage.sizeToScene();
+	}
+	
+	private void actualiserAutres() {
 		milieu.actualiserAffichage(jeu);
 	    zoneDeJeu.actualiserAffichage(jeu.getJoueurActif());
 	    
@@ -63,12 +89,12 @@ public class PanneauDeJeu extends BorderPane {
 	    if (n == 2) {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
 	    } else if (n == 3) {
-	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
-	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
+	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
+	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    } else { // n == 4
-	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
+	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur());
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
-	    	affJoueurDroite.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
+	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
 	}
 	

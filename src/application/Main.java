@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
+import modele.joueurs.Gentil;
 import modele.joueurs.Humain;
 import vue.PanneauDeJeu;
 import javafx.scene.Scene;
@@ -17,11 +18,12 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		Jeu jeu = new Jeu();		
-		PanneauDeJeu panneau = new PanneauDeJeu(jeu);
+		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
 		Scene scene = new Scene(panneau);
 		panneau.getEcouteurSouris().setScene(scene);
-		Joueur j1 = new Humain("j1");
-		Joueur j2 = new Humain("j2");
+		Joueur j1 = new Humain("Pierre");
+		Joueur j2 = new Humain("Paul");
+		Joueur j3 = new Gentil("Bot");
 		 
 		stage.setScene(scene);
 		stage.sizeToScene();
@@ -29,7 +31,7 @@ public class Main extends Application {
 		stage.setResizable(false);
 		stage.show();
 		
-		jeu.ajouteJoueurs(j1, j2);
+		jeu.ajouteJoueurs(j1, j2, j3);
 		jeu.prepareJeu();
 		jeu.activeProchainJoueurEtTireCarte();
 		

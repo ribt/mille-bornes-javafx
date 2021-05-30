@@ -1,6 +1,7 @@
 package controleur;
 
 import javafx.event.ActionEvent;
+import vue.APropos;
 
 public class EcouteurMenu {
 	
@@ -21,7 +22,7 @@ public class EcouteurMenu {
 	}
 	
 	public void aPropos(ActionEvent actionEvent) {
-		//TODO
+		APropos.getAPropos().showAndWait();
 	}
 
 }

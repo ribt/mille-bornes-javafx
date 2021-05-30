@@ -17,19 +17,20 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage) {
-		Jeu jeu = new Jeu();		
+		Jeu jeu = new Jeu();
 		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
 		Scene scene = new Scene(panneau);
 		panneau.getControleur().setScene(scene);
-		Joueur j1 = new Humain("Pierre");
-		Joueur j2 = new Gentil("Bot 1");
-		Joueur j3 = new Gentil("Bot 2");
 		 
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.setTitle("1000 bornes");
 		stage.setResizable(false);
 		stage.show();
+		
+		Joueur j1 = new Humain("Pierre");
+		Joueur j2 = new Gentil("Bot 1");
+		Joueur j3 = new Gentil("Bot 2");
 		
 		jeu.ajouteJoueurs(j1, j2, j3);
 		jeu.prepareJeu();

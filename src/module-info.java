@@ -10,6 +10,7 @@ module millebornesGUI {
 	opens modele;
 	opens modele.cartes;
 	
+	
 	exports controleur;
 	exports modele;
 	exports modele.cartes;

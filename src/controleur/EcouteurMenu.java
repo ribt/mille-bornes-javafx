@@ -12,7 +12,7 @@ public class EcouteurMenu {
 	}
 	
 	public void commencer(ActionEvent actionEvent) {
-		//TODO
+		controleur.hub();
 	}
 	
 	public void sauvgarder(ActionEvent actionEvent) {

@@ -151,12 +151,19 @@ public class Controleur {
 		JsonObject json = jeu.sauvegarde();
 		System.out.println(json);
 		Gson gson = new Gson();
-		Jeu copieJeu = gson.fromJson(json, Jeu.class);
-		System.out.println(copieJeu);
+		try {
+			Jeu copieJeu = gson.fromJson(json, Jeu.class);
+		}catch(Exception e) {
+			System.out.println("Erreur : "+e.getMessage());
+		}
 	}
 
 	public void setEcouteurMenu() {
 		panneau.getEcouteurMenu().setControleur(this);
+	}
+	
+	public void hub() {
+		
 	}
 
 }

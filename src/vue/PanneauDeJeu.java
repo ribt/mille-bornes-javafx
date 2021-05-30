@@ -3,6 +3,7 @@ package vue;
 import java.io.IOException;
 
 import controleur.Controleur;
+import controleur.EcouteurMenu;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -27,6 +28,7 @@ public class PanneauDeJeu extends StackPane {
 	private Stage stage;
 	private PremierPlan premierPlan;
 	private BorderPane secondPlan;
+	private EcouteurMenu ecouteurMenu;
 
 	public PanneauDeJeu(Jeu jeu, Stage stage) {
 		this.jeu = jeu;
@@ -55,11 +57,15 @@ public class PanneauDeJeu extends StackPane {
 		secondPlan.setCenter(milieu);
 	    
 	    try {
-			MenuBar menus = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml")).load();
+	    	FXMLLoader loader = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml"));
+			MenuBar menus = loader.load();
+			ecouteurMenu = loader.getController();
 			secondPlan.setTop(new VBox(10, menus, affJoueurHaut));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	    
+	    controleur.setEcouteurMenu();
 	}
 	
 	public void actualiserAffichage() {
@@ -112,5 +118,9 @@ public class PanneauDeJeu extends StackPane {
 		
 		zoneDeJeu.cacherCarte(choix);
 		premierPlan.animation(jeu.getJoueurActif().getMain().get(choix).getImage(), zoneDeJeu.getPositionCarte(choix), zoneCible.getPositionBataille());
+	}
+	
+	public EcouteurMenu getEcouteurMenu() {
+		return ecouteurMenu;
 	}
 }

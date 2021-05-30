@@ -5,16 +5,22 @@ import vue.APropos;
 
 public class EcouteurMenu {
 	
+	private Controleur controleur;
+	
+	public void setControleur(Controleur controleur) {
+		this.controleur = controleur;
+	}
+	
 	public void commencer(ActionEvent actionEvent) {
 		//TODO
 	}
 	
 	public void sauvgarder(ActionEvent actionEvent) {
-		//TODO
+		controleur.sauvegarde();
 	}
 	
 	public void charger(ActionEvent actionEvent) {
-		//TODO
+		controleur.charge();
 	}
 	
 	public void quitter(ActionEvent actionEvent) {

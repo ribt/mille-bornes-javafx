@@ -1,5 +1,9 @@
 package controleur;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -31,11 +35,11 @@ public class Controleur {
 		this.jeu = jeu;
 		this.panneau = panneau;
 	}
-	
+
 	public void setScene(Scene scene) {
 		this.scene = scene;
 	}
-	
+
 	public void carteCliquee(MouseEvent event) {
 		if (piocheEnCours || simulationEnCours) {
 			event.consume();
@@ -44,16 +48,16 @@ public class Controleur {
 		scene.setCursor(Cursor.MOVE);
 		this.carteSelectionne = GridPane.getColumnIndex((ImageView) event.getSource());
 	}
-	
+
 	public void carteRelachee(MouseEvent event) {
 		if (piocheEnCours || simulationEnCours) {
 			event.consume();
 			return;
 		}
-		
+
 		scene.setCursor(Cursor.DEFAULT);
 		Node cible = event.getPickResult().getIntersectedNode();
-		
+
 		try {
 			if (cible != null) {
 				Joueur joueurVise = null;
@@ -62,7 +66,7 @@ public class Controleur {
 				} else if (cible.getParent() instanceof ZoneAffichageJoueur) {
 					joueurVise = ((ZoneAffichageJoueur) cible.getParent()).getJoueur();
 				}
-				
+
 				if (joueurVise != null) {
 					if (joueurVise == jeu.getJoueurActif()) {
 						jeu.getJoueurActif().joueCarte(jeu, carteSelectionne);
@@ -72,7 +76,7 @@ public class Controleur {
 						tourSuivant();
 					}
 				}
-				
+
 				if (cible instanceof Defausse) {
 					jeu.getJoueurActif().defausseCarte(jeu, carteSelectionne);
 					tourSuivant();
@@ -85,18 +89,18 @@ public class Controleur {
 		this.carteSelectionne = -1;
 		panneau.actualiserAffichage();
 	}
-	
+
 	public void tourSuivant() {
 		jeu.activeProchainJoueur();
 		panneau.actualiserAffichage();
 		piocheEnCours = true;
 		panneau.animationPioche();		
 	}
-	
+
 	private void jouerTour() {
 		jeu.tireCarte();
 		panneau.actualiserAffichage();
-		
+
 		if (jeu.getJoueurActif() instanceof Gentil) {
 			Gentil bot = (Gentil) jeu.getJoueurActif();
 			Carte carte;
@@ -122,7 +126,7 @@ public class Controleur {
 			}			
 		}
 	}
-	
+
 	public void finAnimation() {
 		if (piocheEnCours) {
 			piocheEnCours = false;
@@ -137,6 +141,22 @@ public class Controleur {
 				jeu.getJoueurActif().joueCarte(jeu, choixBot, cibleBot);
 			tourSuivant();
 		}
+	}
+
+	public void sauvegarde() {
+		jeu.sauvegarde();
+	}
+	
+	public void charge() {
+		JsonObject json = jeu.sauvegarde();
+		System.out.println(json);
+		Gson gson = new Gson();
+		Jeu copieJeu = gson.fromJson(json, Jeu.class);
+		System.out.println(copieJeu);
+	}
+
+	public void setEcouteurMenu() {
+		panneau.getEcouteurMenu().setControleur(this);
 	}
 
 }

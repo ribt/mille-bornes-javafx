@@ -39,7 +39,7 @@ public abstract class Carte implements Sauvegardable {
 			return new Borne(obj.get("borne").getAsInt());
 		String classe = obj.get("carte").getAsString();
 		String cat = obj.get("cat").getAsString();
-		String pkg = String.format("mille_bornes.cartes.%ss.", cat);
+		String pkg = String.format("modele.cartes.%ss.", cat);
 		try {
 			Class<?> klass = Class.forName(pkg + classe) ;
 			if ("botte".equals(cat))

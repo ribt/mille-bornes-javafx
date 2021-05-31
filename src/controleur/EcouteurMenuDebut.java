@@ -20,7 +20,7 @@ public class EcouteurMenuDebut {
 	
 	private Stage stage;
 	private ObservableList<String> difficulteBot = FXCollections
-			.observableArrayList("Joueur", "Facile");
+			.observableArrayList("Joueur", "Bot Facile");
 
 	@FXML
 	private TextField nomJoueur1;
@@ -65,10 +65,9 @@ public class EcouteurMenuDebut {
 		}else {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setHeaderText("Vous n'êtes pas assez !");
-			errorAlert.setContentText("Il faut être au moins deux joueurs ou bot pour lancer une partie.");
+			errorAlert.setContentText("Il faut être au moins deux joueurs ou bots pour lancer une partie.");
 			errorAlert.showAndWait();
 		}
-		System.out.println("Joueur 1 :"+nomJoueur1.getText()+" "+botJoueur1.getValue()+"\nJoueur 2 :"+nomJoueur2.getText()+" "+botJoueur2.getValue()+"\nJoueur 3 :"+nomJoueur3.getText()+" "+botJoueur3.getValue()+"\nJoueur 4 :"+nomJoueur4.getText()+" "+botJoueur4.getValue());
 	}
 
 	public void setStage(Stage stage) {
@@ -132,7 +131,7 @@ public class EcouteurMenuDebut {
 		switch (etatBot) {
 		case "Joueur":
 			return new Humain(nom);
-		case "Facile":
+		case "Bot Facile":
 			return new Gentil(nom);
 		}
 		return null;

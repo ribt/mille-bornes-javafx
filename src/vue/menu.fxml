@@ -9,8 +9,8 @@
 	fx:controller="controleur.EcouteurMenu">
 	<Menu text="Partie">
 		<MenuItem onAction="#commencer" text="Commencer" />
-		<MenuItem onAction="#sauvgarder" text="Sauvgarder" />
-		<MenuItem onAction="#charger" text="Charger" />
+		<MenuItem onAction="#sauvgarder" text="Enregistrer sous..." />
+		<MenuItem onAction="#charger" text="Charger une partie..." />
 		<MenuItem onAction="#quitter" text="Quitter" />
 	</Menu>
 	<Menu text="Aide">

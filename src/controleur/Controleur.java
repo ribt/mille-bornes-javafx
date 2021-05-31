@@ -165,18 +165,18 @@ public class Controleur {
 	public void sauvegarde() {
 		FileChooser dialogue = new FileChooser();
 		File fichier = dialogue.showSaveDialog(null);
+		if (fichier == null) {
+			return;
+		}
 		if (!fichier.getName().endsWith(".json")) {
 			fichier = new File(fichier.getAbsolutePath()+".json");
 		}
-		if (fichier != null) {
-			DataOutputStream flux;
-			try {
-				flux = new DataOutputStream(new FileOutputStream(fichier));
-				flux.writeChars(jeu.sauvegarde().toString());
-				flux.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			DataOutputStream flux = new DataOutputStream(new FileOutputStream(fichier));
+			flux.writeChars(jeu.sauvegarde().toString());
+			flux.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -184,9 +184,9 @@ public class Controleur {
 		FileChooser dialogue = new FileChooser();
 		dialogue.getExtensionFilters().addAll(new ExtensionFilter("Fichiers JSON","*.json"), new ExtensionFilter("Tous les fichiers","*"));
 		File fichier = dialogue.showOpenDialog(null);
+		JsonObject jsonObject = new JsonObject();
+		JsonParser parser = new JsonParser();
 		try {
-			JsonObject jsonObject = new JsonObject();
-			JsonParser parser = new JsonParser();
 			JsonElement jsonElement = parser.parse(new FileReader(fichier.getAbsolutePath()));
 			jsonObject = jsonElement.getAsJsonObject();
 			Jeu jeuChargé = new Jeu(jsonObject);

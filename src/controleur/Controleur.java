@@ -8,7 +8,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.cartes.Attaque;
@@ -22,6 +21,7 @@ import vue.ZoneAffichageJoueur;
 public class Controleur {
 	private Jeu jeu;
 	private PanneauDeJeu panneau;
+	private PanneauDebut accueil;
 	private Scene scene;
 	private int carteSelectionne = -1;
 	private boolean piocheEnCours;
@@ -29,9 +29,13 @@ public class Controleur {
 	private int choixBot;
 	private Joueur cibleBot;
 
-	public Controleur(Jeu jeu, PanneauDeJeu panneau) {
-		this.jeu = jeu;
-		this.panneau = panneau;
+	public Controleur() {
+		this.panneau = new PanneauDeJeu(this);
+		this.accueil = new PanneauDebut(this);
+	}
+	
+	public PanneauDebut getPanneauDebut() {
+		return accueil;
 	}
 
 	public void setScene(Scene scene) {
@@ -149,21 +153,17 @@ public class Controleur {
 		Jeu jeuChargé = new Jeu(jeu.sauvegarde());
 		System.out.println("Nombre de joueurs :"+jeuChargé.getNbJoueurs()+"\nA tour de "+jeuChargé.getJoueurActif());
 	}
-
-	public void setEcouteurMenu() {
-		panneau.getEcouteurMenu().setControleur(this);
-	}
 	
 	public void hub() {
-		Stage stage = panneau.getStage();
-		PanneauDebut panneauDebut = new PanneauDebut(stage);
-		panneauDebut.getEcouteur().setStage(stage);
-		stage.setScene(new Scene(panneauDebut));
-		stage.setResizable(false);
-		stage.setTitle("1000 bornes");
-		stage.show();
-		
-		stage.sizeToScene();
+		scene.setRoot(accueil);
+		scene.getWindow().sizeToScene();
 	}
-
+	
+	public void passerEnModeJeu(Jeu jeu) {
+		this.jeu = jeu;
+		panneau.setJeu(jeu);
+		scene.setRoot(panneau);
+		scene.getWindow().sizeToScene();
+		tourSuivant();
+	}
 }

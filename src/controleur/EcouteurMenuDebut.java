@@ -18,7 +18,7 @@ import vue.PanneauDeJeu;
 
 public class EcouteurMenuDebut {
 
-	private Stage stage;
+	private Controleur controleur;
 	private ObservableList<String> difficulteBot = FXCollections.observableArrayList("Joueur", "Bot Facile");
 
 	@FXML
@@ -56,6 +56,10 @@ public class EcouteurMenuDebut {
 		botJoueur4.setItems(difficulteBot);
 		botJoueur4.setValue("Joueur");
 	}
+	
+	public void setControleur(Controleur controleur) {
+		this.controleur = controleur;
+	}
 
 	@FXML
 	private void parametrerLaGame(ActionEvent event) {
@@ -67,10 +71,6 @@ public class EcouteurMenuDebut {
 			errorAlert.setContentText("Il faut être au moins deux joueurs ou bots pour lancer une partie.");
 			errorAlert.showAndWait();
 		}
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
 	}
 
 	void lancerLaGame() {
@@ -95,16 +95,7 @@ public class EcouteurMenuDebut {
 		jeu.prepareJeu();
 
 
-		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
-		Scene scene = new Scene(panneau);
-		panneau.getControleur().setScene(scene);
-
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.setTitle("1000 bornes");
-		stage.setResizable(false);
-		stage.show();
-		panneau.getControleur().tourSuivant();
+		controleur.passerEnModeJeu(jeu);
 	}
 
 	private boolean gameEstJouable() {

@@ -9,21 +9,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import modele.Jeu;
-import modele.joueurs.Humain;
 
 public class PanneauDebut extends BorderPane {
 	private Pane centre;
 	private EcouteurMenuDebut ecouteur;
 	private EcouteurMenu ecouteurMenuBar;
 	
-	public PanneauDebut(Stage stage) {
-		FXMLLoader loader = new FXMLLoader(PanneauDebut.class.getResource("menuDebut.fxml"));
+	public PanneauDebut(Controleur controleur) {
 		try {
+			FXMLLoader loader = new FXMLLoader(PanneauDebut.class.getResource("menuDebut.fxml"));
 			this.centre = loader.load();
 			this.ecouteur = loader.getController();
 			setCenter(centre);
+			ecouteur.setControleur(controleur);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,22 +33,8 @@ public class PanneauDebut extends BorderPane {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Jeu fauxJeu = new Jeu(new Humain("Joueur 1"), new Humain("Joueur 2"));
-		fauxJeu.prepareJeu();
 		
-		ecouteurMenuBar.setControleur(new Controleur(fauxJeu, new PanneauDeJeu(fauxJeu, stage)));
+		ecouteurMenuBar.setControleur(controleur);
 		
-	}
-	
-	public Pane getCentre() {
-		return centre;
-	}
-	
-	public EcouteurMenuDebut getEcouteur() {
-		return ecouteur;
-	}
-	
-	public EcouteurMenu getEcouteurMenuBar() {
-		return ecouteurMenuBar;
 	}
 }

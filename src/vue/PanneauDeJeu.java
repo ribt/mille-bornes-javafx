@@ -12,7 +12,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.cartes.Carte;
@@ -25,15 +24,13 @@ public class PanneauDeJeu extends StackPane {
 	private ZoneAffichageJoueur affJoueurGauche;
 	private ZoneMilieu milieu;
 	private Controleur controleur;
-	private Stage stage;
 	private PremierPlan premierPlan;
 	private BorderPane secondPlan;
 	private EcouteurMenu ecouteurMenu;
+	private MenuBar menus;
 
-	public PanneauDeJeu(Jeu jeu, Stage stage) {
-		this.jeu = jeu;
-		this.stage = stage;
-		this.controleur = new Controleur(jeu, this);
+	public PanneauDeJeu(Controleur controleur) {
+		this.controleur = controleur;
 		this.premierPlan = new PremierPlan(controleur);
 		this.secondPlan = new BorderPane();
 		
@@ -58,14 +55,13 @@ public class PanneauDeJeu extends StackPane {
 	    
 	    try {
 	    	FXMLLoader loader = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml"));
-			MenuBar menus = loader.load();
+			this.menus = loader.load();
 			ecouteurMenu = loader.getController();
+			ecouteurMenu.setControleur(controleur);
 			secondPlan.setTop(new VBox(10, menus, affJoueurHaut));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    
-	    controleur.setEcouteurMenu();
 	}
 	
 	public void actualiserAffichage() {
@@ -84,7 +80,7 @@ public class PanneauDeJeu extends StackPane {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
-	    stage.sizeToScene();
+	    getScene().getWindow().sizeToScene();
 	    
 		if (jeu.estPartieFinie()) {
 			Alert msg = new Alert(AlertType.INFORMATION, "Victoire de "+jeu.getGagnant());
@@ -124,7 +120,7 @@ public class PanneauDeJeu extends StackPane {
 		return ecouteurMenu;
 	}
 	
-	public Stage getStage() {
-		return stage;
+	public void setJeu(Jeu jeu) {
+		this.jeu = jeu;
 	}
 }

@@ -1,8 +1,8 @@
 package application;
 
+import controleur.Controleur;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import vue.PanneauDebut;
 import javafx.scene.Scene;
 
 public class Main extends Application {
@@ -13,13 +13,13 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		PanneauDebut panneauDebut = new PanneauDebut(stage);
-		panneauDebut.getEcouteur().setStage(stage);
-		stage.setScene(new Scene(panneauDebut));
+		Controleur controleur = new Controleur();
+		Scene scene = new Scene(controleur.getPanneauDebut());
+		controleur.setScene(scene);
+		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.setTitle("1000 bornes");
 		stage.show();
-		
-		stage.sizeToScene();
+		controleur.hub();
 	}	
 }

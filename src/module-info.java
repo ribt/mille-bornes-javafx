@@ -9,6 +9,7 @@ module millebornesGUI {
 	opens application to javafx.graphics, javafx.fxml;
 	opens modele;
 	opens modele.cartes;
+	opens controleur;
 	
 	
 	exports controleur;

@@ -15,6 +15,6 @@
       <CheckBox fx:id="Joueur2Bot" layoutX="300.0" layoutY="166.0" mnemonicParsing="false" text="Bot" />
       <CheckBox fx:id="Joueur3Bot" layoutX="300.0" layoutY="218.0" mnemonicParsing="false" text="Bot" />
       <CheckBox fx:id="Joueur4Bot" layoutX="300.0" layoutY="270.0" mnemonicParsing="false" text="Bot" />
-      <Button layoutX="428.0" layoutY="319.0" mnemonicParsing="false" onAction="#lancerLaGame" prefHeight="44.0" prefWidth="103.0" text="Start" />
+      <Button layoutX="428.0" layoutY="319.0" mnemonicParsing="false" onAction="#ParametrerLaGame" prefHeight="44.0" prefWidth="103.0" text="Start" />
    </children>
 </Pane>

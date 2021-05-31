@@ -11,7 +11,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.cartes.Attaque;
@@ -19,6 +21,7 @@ import modele.cartes.Carte;
 import modele.joueurs.Gentil;
 import vue.Defausse;
 import vue.PanneauDeJeu;
+import vue.PanneauDebut;
 import vue.ZoneAffichageJoueur;
 
 public class Controleur {
@@ -148,14 +151,8 @@ public class Controleur {
 	}
 	
 	public void charge() {
-		JsonObject json = jeu.sauvegarde();
-		System.out.println(json);
-		Gson gson = new Gson();
-		try {
-			Jeu copieJeu = gson.fromJson(json, Jeu.class);
-		}catch(Exception e) {
-			System.out.println("Erreur : "+e.getMessage());
-		}
+		Jeu jeuChargé = new Jeu(jeu.sauvegarde());
+		System.out.println("Nombre de joueurs :"+jeuChargé.getNbJoueurs()+"\nA tour de "+jeuChargé.getJoueurActif());
 	}
 
 	public void setEcouteurMenu() {
@@ -163,7 +160,16 @@ public class Controleur {
 	}
 	
 	public void hub() {
+		Stage stage = panneau.getStage();
+		PanneauDebut panneauDebut = new PanneauDebut(stage);
+		BorderPane mainPane = panneauDebut.getCadre();
+		panneauDebut.getEcouteur().setStage(stage);
+		stage.setScene(new Scene(mainPane));
+		stage.setResizable(false);
+		stage.setTitle("1000 bornes");
+		stage.show();
 		
+		stage.sizeToScene();
 	}
 
 }

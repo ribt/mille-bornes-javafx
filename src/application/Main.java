@@ -9,6 +9,7 @@ import modele.joueurs.Humain;
 import vue.PanneauDeJeu;
 import vue.PanneauDebut;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class Main extends Application {
@@ -20,9 +21,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		PanneauDebut panneauDebut = new PanneauDebut(stage);
-		Pane mainPane = panneauDebut.getCadre();
-//		panneauDebut.getEcouteurMenuDebut().setStage(stage);
+		BorderPane mainPane = panneauDebut.getCadre();
+		panneauDebut.getEcouteur().setStage(stage);
 		stage.setScene(new Scene(mainPane));
+		stage.setResizable(false);
 		stage.setTitle("1000 bornes");
 		stage.show();
 		

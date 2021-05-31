@@ -17,7 +17,7 @@ import modele.joueurs.Humain;
 import vue.PanneauDeJeu;
 
 public class EcouteurMenuDebut {
-	
+
 	private Stage stage;
 	private ObservableList<String> difficulteBot = FXCollections
 			.observableArrayList("Joueur", "Bot Facile");
@@ -59,10 +59,10 @@ public class EcouteurMenuDebut {
 	}
 
 	@FXML
-	void ParametrerLaGame(ActionEvent event) {
+	private void ParametrerLaGame(ActionEvent event) {
 		if(gameEstJouable()) {
-			LancerLaGame();
-		}else {
+			lancerLaGame();
+		} else {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setHeaderText("Vous n'êtes pas assez !");
 			errorAlert.setContentText("Il faut être au moins deux joueurs ou bots pour lancer une partie.");
@@ -74,7 +74,7 @@ public class EcouteurMenuDebut {
 		this.stage = stage;
 	}
 
-	void LancerLaGame() {
+	void lancerLaGame() {
 		Jeu jeu = new Jeu();
 
 		if(nomJoueur1.getText().trim().length()>0) {
@@ -94,7 +94,7 @@ public class EcouteurMenuDebut {
 			jeu.ajouteJoueurs(j4);
 		}
 		jeu.prepareJeu();
-		
+
 
 		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
 		Scene scene = new Scene(panneau);
@@ -127,6 +127,7 @@ public class EcouteurMenuDebut {
 		}
 		return false;
 	}
+	
 	private Joueur creeLeJoueur(String etatBot, String nom) {
 		switch (etatBot) {
 		case "Joueur":

@@ -123,4 +123,8 @@ public class PanneauDeJeu extends StackPane {
 	public EcouteurMenu getEcouteurMenu() {
 		return ecouteurMenu;
 	}
+	
+	public Stage getStage() {
+		return stage;
+	}
 }

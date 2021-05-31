@@ -2,31 +2,64 @@ package vue;
 
 import java.io.IOException;
 
+import controleur.Controleur;
+import controleur.EcouteurMenu;
 import controleur.EcouteurMenuDebut;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.Jeu;
+import modele.joueurs.Humain;
 
 public class PanneauDebut {
-	Pane cadre;
+	Pane centre;
+	BorderPane cadre;
 	EcouteurMenuDebut ecouteur;
+	EcouteurMenu ecouteurMenuBar;
+	
 	public PanneauDebut(Stage stage) {
-		FXMLLoader loader = new FXMLLoader(PanneauDebut.class.getResource("MenuDebut.fxml"));
-		System.out.println("On a demandé le controlleur :"+loader.getController());
+		cadre = new BorderPane();
+		
+		FXMLLoader loader = new FXMLLoader(PanneauDebut.class.getResource("menuDebut.fxml"));
 		this.ecouteur = loader.getController();
-		System.out.println("On a créé le controlleur :"+ecouteur);
 		try {
-			cadre = loader.load();
+			centre = loader.load();
+			ecouteur = loader.getController();
+			cadre.setCenter(centre);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		try {
+			FXMLLoader loaderMenuBar = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml"));
+			MenuBar menus = loaderMenuBar.load();
+			ecouteurMenuBar = loaderMenuBar.getController();
+			cadre.setTop(new VBox(10, menus));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Jeu fauxJeu = new Jeu(new Humain("Joueur 1"), new Humain("Joueur 2"));
+		fauxJeu.prepareJeu();
+		
+		ecouteurMenuBar.setControleur(new Controleur(fauxJeu, new PanneauDeJeu(fauxJeu, stage)));
+		
 	}
-	public Pane getCadre() {
-		return cadre;
+	
+	public Pane getCentre() {
+		return centre;
 	}
-	public EcouteurMenuDebut getEcouteurMenuDebut() {
-		System.out.println("On le demande :"+ecouteur);
+	
+	public EcouteurMenuDebut getEcouteur() {
 		return ecouteur;
+	}
+	
+	public EcouteurMenu getEcouteurMenuBar() {
+		return ecouteurMenuBar;
+	}
+
+	public BorderPane getCadre() {
+		return cadre;
 	}
 }

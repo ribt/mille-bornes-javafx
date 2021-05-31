@@ -11,13 +11,14 @@ import javafx.stage.Stage;
 public class PanneauDebut {
 	Pane cadre;
 	EcouteurMenuDebut ecouteur;
-	public PanneauDebut(Stage stage){
+	public PanneauDebut(Stage stage) {
+		FXMLLoader loader = new FXMLLoader(PanneauDebut.class.getResource("MenuDebut.fxml"));
+		System.out.println("On a demandé le controlleur :"+loader.getController());
+		this.ecouteur = loader.getController();
+		System.out.println("On a créé le controlleur :"+ecouteur);
 		try {
-			FXMLLoader loader = FXMLLoader.load(PanneauDebut.class.getResource("MenuDebut.fxml"));
-			ecouteur = loader.getController();
 			cadre = loader.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -25,6 +26,7 @@ public class PanneauDebut {
 		return cadre;
 	}
 	public EcouteurMenuDebut getEcouteurMenuDebut() {
+		System.out.println("On le demande :"+ecouteur);
 		return ecouteur;
 	}
 }

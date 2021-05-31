@@ -21,6 +21,7 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		PanneauDebut panneauDebut = new PanneauDebut(stage);
 		Pane mainPane = panneauDebut.getCadre();
+		panneauDebut.getEcouteurMenuDebut().setStage(stage);
 		stage.setScene(new Scene(mainPane));
 		stage.setTitle("1000 bornes");
 		stage.show();

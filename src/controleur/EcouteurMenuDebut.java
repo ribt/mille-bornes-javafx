@@ -19,8 +19,7 @@ import vue.PanneauDeJeu;
 public class EcouteurMenuDebut {
 
 	private Stage stage;
-	private ObservableList<String> difficulteBot = FXCollections
-			.observableArrayList("Joueur", "Bot Facile");
+	private ObservableList<String> difficulteBot = FXCollections.observableArrayList("Joueur", "Bot Facile");
 
 	@FXML
 	private TextField nomJoueur1;
@@ -59,8 +58,8 @@ public class EcouteurMenuDebut {
 	}
 
 	@FXML
-	private void ParametrerLaGame(ActionEvent event) {
-		if(gameEstJouable()) {
+	private void parametrerLaGame(ActionEvent event) {
+		if (gameEstJouable()) {
 			lancerLaGame();
 		} else {
 			Alert errorAlert = new Alert(AlertType.ERROR);
@@ -77,19 +76,19 @@ public class EcouteurMenuDebut {
 	void lancerLaGame() {
 		Jeu jeu = new Jeu();
 
-		if(nomJoueur1.getText().trim().length()>0) {
+		if (nomJoueur1.getText().trim().length()>0) {
 			Joueur j1 = creeLeJoueur(botJoueur1.getValue(), nomJoueur1.getText().trim());
 			jeu.ajouteJoueurs(j1);
 		}
-		if(nomJoueur2.getText().trim().length()>0) {
+		if (nomJoueur2.getText().trim().length()>0) {
 			Joueur j2 = creeLeJoueur(botJoueur2.getValue(), nomJoueur2.getText().trim());
 			jeu.ajouteJoueurs(j2);
 		}
-		if(nomJoueur3.getText().trim().length()>0) {
+		if (nomJoueur3.getText().trim().length()>0) {
 			Joueur j3 = creeLeJoueur(botJoueur3.getValue(), nomJoueur3.getText().trim());
 			jeu.ajouteJoueurs(j3);
 		}
-		if(nomJoueur4.getText().trim().length()>0) {
+		if (nomJoueur4.getText().trim().length()>0) {
 			Joueur j4 = creeLeJoueur(botJoueur1.getValue(), nomJoueur4.getText().trim());
 			jeu.ajouteJoueurs(j4);
 		}
@@ -110,19 +109,19 @@ public class EcouteurMenuDebut {
 
 	private boolean gameEstJouable() {
 		int i = 0;
-		if(nomJoueur1.getText().trim().length()>0) {
+		if (nomJoueur1.getText().trim().length()>0) {
 			i++;
 		}
-		if(nomJoueur2.getText().trim().length()>0) {
+		if (nomJoueur2.getText().trim().length()>0) {
 			i++;
 		}
-		if(nomJoueur3.getText().trim().length()>0) {
+		if (nomJoueur3.getText().trim().length()>0) {
 			i++;
 		}
-		if(nomJoueur4.getText().trim().length()>0) {
+		if (nomJoueur4.getText().trim().length()>0) {
 			i++;
 		}
-		if(i>=2) {
+		if (i>=2) {
 			return true;
 		}
 		return false;
@@ -130,10 +129,10 @@ public class EcouteurMenuDebut {
 	
 	private Joueur creeLeJoueur(String etatBot, String nom) {
 		switch (etatBot) {
-		case "Joueur":
-			return new Humain(nom);
-		case "Bot Facile":
-			return new Gentil(nom);
+			case "Joueur":
+				return new Humain(nom);
+			case "Bot Facile":
+				return new Gentil(nom);
 		}
 		return null;
 

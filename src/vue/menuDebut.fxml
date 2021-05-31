@@ -19,7 +19,7 @@
       <TextField fx:id="nomJoueur2" layoutX="135.0" layoutY="162.0" promptText="Nom joueur 2" />
       <TextField fx:id="nomJoueur3" layoutX="135.0" layoutY="214.0" promptText="Nom joueur 3" />
       <TextField fx:id="nomJoueur4" layoutX="135.0" layoutY="266.0" promptText="Nom joueur 4" />
-      <Button layoutX="447.0" layoutY="328.0" mnemonicParsing="false" onAction="#ParametrerLaGame" prefHeight="44.0" prefWidth="103.0" text="Start" />
+      <Button layoutX="447.0" layoutY="328.0" mnemonicParsing="false" onAction="#parametrerLaGame" prefHeight="44.0" prefWidth="103.0" text="Start" />
       <ChoiceBox fx:id="botJoueur1" layoutX="315.0" layoutY="110.0" prefWidth="150.0" />
       <ChoiceBox fx:id="botJoueur2" layoutX="315.0" layoutY="162.0" prefWidth="150.0" />
       <ChoiceBox fx:id="botJoueur3" layoutX="315.0" layoutY="214.0" prefWidth="150.0" />

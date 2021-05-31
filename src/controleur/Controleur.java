@@ -4,13 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -185,9 +181,9 @@ public class Controleur {
 		dialogue.getExtensionFilters().addAll(new ExtensionFilter("Fichiers JSON","*.json"), new ExtensionFilter("Tous les fichiers","*"));
 		File fichier = dialogue.showOpenDialog(null);
 		JsonObject jsonObject = new JsonObject();
-		JsonParser parser = new JsonParser();
 		try {
-			JsonElement jsonElement = parser.parse(new FileReader(fichier.getAbsolutePath()));
+			DataInputStream flux = new DataInputStream(new FileInputStream(fichier));
+			JsonElement jsonElement = JsonParser.parseString(flux.readUTF());
 			jsonObject = jsonElement.getAsJsonObject();
 			Jeu jeuChargé = new Jeu(jsonObject);
 			passerEnModeJeu(jeuChargé);

@@ -1,7 +1,5 @@
 package controleur;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,11 +17,10 @@ import modele.joueurs.Humain;
 import vue.PanneauDeJeu;
 
 public class EcouteurMenuDebut {
-
-	private Jeu jeu;
+	
 	private Stage stage;
 	private ObservableList<String> difficulteBot = FXCollections
-			.observableArrayList("Joueur", "Facile","Normal","Difficile");
+			.observableArrayList("Joueur", "Facile");
 
 	@FXML
 	private TextField nomJoueur1;
@@ -79,17 +76,7 @@ public class EcouteurMenuDebut {
 	}
 
 	void LancerLaGame() {
-		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
-		Scene scene = new Scene(panneau);
-		panneau.getControleur().setScene(scene);
-
-
 		Jeu jeu = new Jeu();
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.setTitle("1000 bornes");
-		stage.setResizable(false);
-		stage.show();
 
 		if(nomJoueur1.getText().trim().length()>0) {
 			Joueur j1 = creeLeJoueur(botJoueur1.getValue(), nomJoueur1.getText().trim());
@@ -108,6 +95,17 @@ public class EcouteurMenuDebut {
 			jeu.ajouteJoueurs(j4);
 		}
 		jeu.prepareJeu();
+		
+
+		PanneauDeJeu panneau = new PanneauDeJeu(jeu, stage);
+		Scene scene = new Scene(panneau);
+		panneau.getControleur().setScene(scene);
+
+		stage.setScene(scene);
+		stage.sizeToScene();
+		stage.setTitle("1000 bornes");
+		stage.setResizable(false);
+		stage.show();
 		panneau.getControleur().tourSuivant();
 	}
 
@@ -125,7 +123,6 @@ public class EcouteurMenuDebut {
 		if(nomJoueur4.getText().trim().length()>0) {
 			i++;
 		}
-		System.out.println(i);
 		if(i>=2) {
 			return true;
 		}

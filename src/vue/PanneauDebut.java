@@ -9,34 +9,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.joueurs.Humain;
 
-public class PanneauDebut {
-	Pane centre;
-	BorderPane cadre;
-	EcouteurMenuDebut ecouteur;
-	EcouteurMenu ecouteurMenuBar;
+public class PanneauDebut extends BorderPane {
+	private Pane centre;
+	private EcouteurMenuDebut ecouteur;
+	private EcouteurMenu ecouteurMenuBar;
 	
 	public PanneauDebut(Stage stage) {
-		cadre = new BorderPane();
-		
 		FXMLLoader loader = new FXMLLoader(PanneauDebut.class.getResource("menuDebut.fxml"));
-		this.ecouteur = loader.getController();
 		try {
-			centre = loader.load();
-			ecouteur = loader.getController();
-			cadre.setCenter(centre);
+			this.centre = loader.load();
+			this.ecouteur = loader.getController();
+			setCenter(centre);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
 			FXMLLoader loaderMenuBar = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml"));
 			MenuBar menus = loaderMenuBar.load();
-			ecouteurMenuBar = loaderMenuBar.getController();
-			cadre.setTop(new VBox(10, menus));
+			this.ecouteurMenuBar = loaderMenuBar.getController();
+			setTop(menus);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,9 +52,5 @@ public class PanneauDebut {
 	
 	public EcouteurMenu getEcouteurMenuBar() {
 		return ecouteurMenuBar;
-	}
-
-	public BorderPane getCadre() {
-		return cadre;
 	}
 }

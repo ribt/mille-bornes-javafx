@@ -1,9 +1,5 @@
 package controleur;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import modele.Jeu;
@@ -162,9 +157,8 @@ public class Controleur {
 	public void hub() {
 		Stage stage = panneau.getStage();
 		PanneauDebut panneauDebut = new PanneauDebut(stage);
-		BorderPane mainPane = panneauDebut.getCadre();
 		panneauDebut.getEcouteur().setStage(stage);
-		stage.setScene(new Scene(mainPane));
+		stage.setScene(new Scene(panneauDebut));
 		stage.setResizable(false);
 		stage.setTitle("1000 bornes");
 		stage.show();

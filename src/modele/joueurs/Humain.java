@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class Humain extends Joueur {
   /** Un {@link java.util.Scanner} pour les entrées au clavier */
-  //private final Scanner input;
 
   /**
    * Crée un joueur.
@@ -20,14 +19,12 @@ public class Humain extends Joueur {
    */
   public Humain(String nom) {
     super(nom);
-    //input = new Scanner(System.in);
   }
 
   public Humain(JsonObject save) {
     super(save);
     if (save.get("type").getAsCharacter() != 'H')
       throw new IllegalStateException("Ceci n'est pas la sauvegarde d'un Humain !");
-    //input = new Scanner(System.in);
   }
 
   @Override

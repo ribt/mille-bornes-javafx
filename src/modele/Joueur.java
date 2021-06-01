@@ -8,6 +8,7 @@ import modele.cartes.Botte;
 import modele.cartes.Carte;
 import modele.joueurs.Gentil;
 import modele.joueurs.Humain;
+import modele.joueurs.Mechant;
 
 import java.util.*;
 
@@ -30,6 +31,7 @@ public abstract class Joueur implements Sauvegardable {
   public static Joueur restaure(JsonObject sauvegarde) {
     switch (sauvegarde.get("type").getAsCharacter()) {
       case 'G' : return new Gentil(sauvegarde);
+      case 'M' : return new Mechant(sauvegarde);
       case 'H' : return new Humain(sauvegarde);
       default:
         throw new IllegalStateException(String.format("Le type %s de joueur est inconnu !", sauvegarde.get("type")));

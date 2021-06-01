@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import modele.Joueur;
 import modele.cartes.*;
+import modele.cartes.attaques.LimiteVitesse;
 import modele.cartes.bottes.VehiculePrioritaire;
 import modele.cartes.parades.FeuVert;
 import modele.cartes.parades.FinDeLimite;
@@ -11,29 +12,29 @@ import modele.cartes.parades.FinDeLimite;
 import java.util.List;
 
 /**
- * Une IA "gentille" qui avance mais n'attaque jamais...
+ * Une IA "méchante" qui avance et attaque.
  */
-public class Gentil extends Bot {
+public class Mechant extends Bot {
 
 	@Override
 	public JsonObject sauvegarde() {
 		JsonObject sauvegarde = super.sauvegarde();
-		sauvegarde.addProperty("type", 'G');
+		sauvegarde.addProperty("type", 'M');
 		return sauvegarde;
 	}
 
 	/** Restaure une IA sauvegardée */
-	public Gentil(JsonObject save) {
+	public Mechant(JsonObject save) {
 		super(save);
-		if (save.get("type").getAsCharacter() != 'G')
-			throw new IllegalStateException("Ceci n'est pas la sauvegarde d'une IA Gentille !");
+		if (save.get("type").getAsCharacter() != 'M')
+			throw new IllegalStateException("Ceci n'est pas la sauvegarde d'une IA Méchante !");
 	}
 
 	/**
 	 * Crée une IA gentille.
 	 * @param nom son nom
 	 */
-	public Gentil(String nom) {
+	public Mechant(String nom) {
 		super(nom);
 	}
 
@@ -58,6 +59,8 @@ public class Gentil extends Bot {
 					borneMax = (Borne)carte;
 				}
 			}
+			if (carte instanceof Attaque && choisitAdversaire((Attaque) carte) != null)
+				return i+1;
 		}
 		
 		if (ditPourquoiPeutPasAvancer() == null && borneMax.km > 0) {
@@ -68,12 +71,28 @@ public class Gentil extends Bot {
 	}
 	
 	@Override
-	public Joueur choisitAdversaire(Attaque carte) { // jamais appelé
-		Joueur choix = this.getProchainJoueur();
-		while (choix == this || rand.nextFloat() > 0.5) {
-			choix = choix.getProchainJoueur();
+	public Joueur choisitAdversaire(Attaque carte) {
+		Joueur test = this.getProchainJoueur();
+		Joueur choix = null;
+		boolean protege;
+		
+		while (test != this) {
+			protege = false;
+			for (Botte b: test.getBottes()) {
+				if (b.contre(carte)) {
+					protege = true;
+				}
+			}
+			if (!protege && test.getBataille() instanceof Parade
+					&& (!(carte instanceof LimiteVitesse) || !test.getLimiteVitesse())
+					&& (choix == null || test.getKm() > choix.getKm())) {
+				choix = test;
+			}
+			test = test.getProchainJoueur();
 		}
-		System.out.println("sur "+choix.nom);
+		
+		if (choix != null)
+			System.out.println("sur "+choix.nom);
 		return choix;
 	}
 	
@@ -94,4 +113,4 @@ public class Gentil extends Bot {
 		return 1;
 	}
 
-} //class Gentil
+} //class Mechant

@@ -4,8 +4,12 @@ import javafx.event.ActionEvent;
 import vue.APropos;
 
 public class EcouteurMenu {
-	
+	private APropos apropos;
 	private Controleur controleur;
+	
+	public EcouteurMenu() {
+		this.apropos = new APropos();
+	}
 	
 	public void setControleur(Controleur controleur) {
 		this.controleur = controleur;
@@ -28,7 +32,7 @@ public class EcouteurMenu {
 	}
 	
 	public void aPropos(ActionEvent actionEvent) {
-		APropos.getAPropos().showAndWait();
+		apropos.showAndWait();
 	}
 
 }

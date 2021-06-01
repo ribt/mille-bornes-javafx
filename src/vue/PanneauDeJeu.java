@@ -80,7 +80,6 @@ public class PanneauDeJeu extends StackPane {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
-	    getScene().getWindow().sizeToScene();
 	}
 	
 	public Controleur getControleur() {

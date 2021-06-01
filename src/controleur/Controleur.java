@@ -216,7 +216,8 @@ public class Controleur {
 		this.jeu = jeu;
 		panneau.setJeu(jeu);
 		scene.setRoot(panneau);
-		scene.getWindow().sizeToScene();
+		scene.getWindow().setWidth(700); // on force la taille car sionon ça saute sans arrêt sleon le nombre de cartes en main
+		scene.getWindow().setHeight(750);
 		tourSuivant();
 	}
 }

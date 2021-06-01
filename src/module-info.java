@@ -15,4 +15,5 @@ module millebornesGUI {
 	exports controleur;
 	exports modele;
 	exports modele.cartes;
+	exports vue;
 }

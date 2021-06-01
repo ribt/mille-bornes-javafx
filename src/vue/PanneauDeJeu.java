@@ -6,9 +6,7 @@ import controleur.Controleur;
 import controleur.EcouteurMenu;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -44,12 +42,12 @@ public class PanneauDeJeu extends StackPane {
 		milieu = new ZoneMilieu(controleur);
 		zoneDeJeu = new ZoneDeJeu(controleur);	
 		
-		secondPlan.setAlignment(zoneDeJeu, Pos.CENTER);
+		BorderPane.setAlignment(zoneDeJeu, Pos.CENTER);
 		secondPlan.setBottom(zoneDeJeu);
 	    
-		secondPlan.setAlignment(affJoueurDroite, Pos.CENTER);
+		BorderPane.setAlignment(affJoueurDroite, Pos.CENTER);
 		secondPlan.setRight(affJoueurDroite);
-		secondPlan.setAlignment(affJoueurGauche, Pos.CENTER);
+		BorderPane.setAlignment(affJoueurGauche, Pos.CENTER);
 		secondPlan.setLeft(affJoueurGauche);
 		secondPlan.setCenter(milieu);
 	    

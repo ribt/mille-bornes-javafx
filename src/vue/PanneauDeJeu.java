@@ -32,6 +32,8 @@ public class PanneauDeJeu extends StackPane {
 		this.premierPlan = new PremierPlan(controleur);
 		this.secondPlan = new BorderPane();
 		
+		setMinWidth(750); // on force la largeur car sinon ça saute selon le nombre de cartes en main
+		
         getChildren().addAll(premierPlan, secondPlan);
         premierPlan.toFront();
 		
@@ -78,6 +80,7 @@ public class PanneauDeJeu extends StackPane {
 	    	affJoueurHaut.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur());
 	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
+	    getScene().getWindow().sizeToScene();
 	}
 	
 	public Controleur getControleur() {

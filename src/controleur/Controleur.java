@@ -214,10 +214,8 @@ public class Controleur {
 	public void passerEnModeJeu(Jeu jeu) {
 		this.jeu = jeu;
 		panneau.setJeu(jeu);
-		panneau.actualiserAffichage();
 		scene.setRoot(panneau);
-		scene.getWindow().setWidth(700); // on force la taille car sinon ça saute sans arrêt selon le nombre de cartes en main
-		scene.getWindow().setHeight(750);
+		panneau.actualiserAffichage();
 		if (jeu.getNbCartesSabot()+6*jeu.getNbJoueurs() < 106) {// le jeu a déjà commencé : partie chargée
 			if (jeu.getJoueurActif().getMain().size() == 6) { // il n'a pas encore pioché
 				piocheEnCours = true;

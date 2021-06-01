@@ -1,6 +1,12 @@
 package controleur;
 
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -8,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
+import java.nio.file.Path;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -150,19 +156,28 @@ public class Controleur {
 	}
 
 	public void charge() {
-		Jeu jeuCharge = new Jeu(jeu.sauvegarde());
-		if(showConfirmation(jeuCharge).toString() == "OK_DONE") {
-			jeu = jeuCharge;
-			Stage stage = panneau.getStage();
-			panneau = new PanneauDeJeu(jeu, stage);
-			scene = new Scene(panneau);
-			panneau.getControleur().setScene(scene);
-			stage.setScene(scene);
-			stage.sizeToScene();
-			stage.setTitle("1000 bornes");
-			stage.setResizable(false);
-			stage.show();
-			panneau.getControleur().tourSuivant();
+		JsonObject save = null;
+		try {
+			save = JsonParser.parseReader(Files.newBufferedReader(Path.of("save.json"))).getAsJsonObject();
+		} catch (Exception e) {
+			Alert msg = new Alert(AlertType.ERROR, "Erreur de récupération de sauvegarde :"+e.toString());
+			msg.showAndWait();
+		}
+		if(save != null) {
+			Jeu jeuCharge = new Jeu(save);
+			if(showConfirmation(jeuCharge).toString() == "OK_DONE") {
+				jeu = jeuCharge;
+				Stage stage = panneau.getStage();
+				panneau = new PanneauDeJeu(jeu, stage);
+				scene = new Scene(panneau);
+				panneau.getControleur().setScene(scene);
+				stage.setScene(scene);
+				stage.sizeToScene();
+				stage.setTitle("1000 bornes");
+				stage.setResizable(false);
+				stage.show();
+				panneau.getControleur().tourSuivant();
+			}
 		}
 	}
 

@@ -105,7 +105,7 @@ public class Controleur {
 
 	public void tourSuivant() {
 		if (jeu.estPartieFinie()) {
-			Alert msg = new Alert(AlertType.NONE);
+			Alert msg = new Alert(AlertType.INFORMATION);
 			List<Joueur> gagnants = jeu.getGagnant();
 			if (gagnants.size() == 1) {
 				msg.setHeaderText("Victoire de "+gagnants.get(0).nom+" !");

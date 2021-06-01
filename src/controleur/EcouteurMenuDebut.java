@@ -17,7 +17,7 @@ import modele.joueurs.Mechant;
 public class EcouteurMenuDebut {
 
 	private Controleur controleur;
-	private ObservableList<String> difficulteBot = FXCollections.observableArrayList("Joueur", "Bot Gentil", "Bot Méchant");
+	private ObservableList<String> difficulteBot = FXCollections.observableArrayList("Humain", "Bot Gentil", "Bot Méchant");
 
 	@FXML
 	private TextField nomJoueur1;
@@ -30,6 +30,8 @@ public class EcouteurMenuDebut {
 
 	@FXML
 	private TextField nomJoueur4;
+	
+	private TextField[] nomJoueurs;
 
 	@FXML
 	private ChoiceBox<String> botJoueur1;
@@ -42,17 +44,18 @@ public class EcouteurMenuDebut {
 
 	@FXML
 	private ChoiceBox<String> botJoueur4;
+	
+	private ChoiceBox<String>[] botJoueurs;
 
 	@FXML
 	private void initialize() {
-		botJoueur1.setItems(difficulteBot);
-		botJoueur1.setValue("Joueur");
-		botJoueur2.setItems(difficulteBot);
-		botJoueur2.setValue("Joueur");
-		botJoueur3.setItems(difficulteBot);
-		botJoueur3.setValue("Joueur");
-		botJoueur4.setItems(difficulteBot);
-		botJoueur4.setValue("Joueur");
+		this.nomJoueurs = new TextField[]{nomJoueur1, nomJoueur2, nomJoueur3, nomJoueur4};
+		this.botJoueurs = new ChoiceBox[]{botJoueur1, botJoueur2, botJoueur3, botJoueur4};
+		
+		for (ChoiceBox<String> choice: botJoueurs) {
+			choice.setItems(difficulteBot);
+			choice.setValue("Humain");
+		}
 	}
 	
 	public void setControleur(Controleur controleur) {
@@ -73,52 +76,28 @@ public class EcouteurMenuDebut {
 
 	void lancerLaGame() {
 		Jeu jeu = new Jeu();
-
-		if (nomJoueur1.getText().trim().length()>0) {
-			Joueur j1 = creeLeJoueur(botJoueur1.getValue(), nomJoueur1.getText().trim());
-			jeu.ajouteJoueurs(j1);
-		}
-		if (nomJoueur2.getText().trim().length()>0) {
-			Joueur j2 = creeLeJoueur(botJoueur2.getValue(), nomJoueur2.getText().trim());
-			jeu.ajouteJoueurs(j2);
-		}
-		if (nomJoueur3.getText().trim().length()>0) {
-			Joueur j3 = creeLeJoueur(botJoueur3.getValue(), nomJoueur3.getText().trim());
-			jeu.ajouteJoueurs(j3);
-		}
-		if (nomJoueur4.getText().trim().length()>0) {
-			Joueur j4 = creeLeJoueur(botJoueur1.getValue(), nomJoueur4.getText().trim());
-			jeu.ajouteJoueurs(j4);
+		for (int i = 0; i < 4; i++) {
+			if (nomJoueurs[i].getText().trim().length() > 0) {
+				jeu.ajouteJoueurs(creeLeJoueur(botJoueurs[i].getValue(), nomJoueurs[i].getText().trim()));
+			}
 		}
 		jeu.prepareJeu();
-
-
 		controleur.passerEnModeJeu(jeu);
 	}
 
 	private boolean gameEstJouable() {
-		int i = 0;
-		if (nomJoueur1.getText().trim().length()>0) {
-			i++;
+		int nbJoueurs = 0;
+		for (TextField text : nomJoueurs) {
+			if (text.getText().trim().length() > 0) {
+				nbJoueurs++;
+			}
 		}
-		if (nomJoueur2.getText().trim().length()>0) {
-			i++;
-		}
-		if (nomJoueur3.getText().trim().length()>0) {
-			i++;
-		}
-		if (nomJoueur4.getText().trim().length()>0) {
-			i++;
-		}
-		if (i>=2) {
-			return true;
-		}
-		return false;
+		return nbJoueurs >= 2;
 	}
 	
 	private Joueur creeLeJoueur(String etatBot, String nom) {
 		switch (etatBot) {
-			case "Joueur":
+			case "Humain":
 				return new Humain(nom);
 			case "Bot Gentil":
 				return new Gentil(nom);

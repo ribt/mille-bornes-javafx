@@ -81,11 +81,6 @@ public class PanneauDeJeu extends StackPane {
 	    	affJoueurGauche.actualiserAffichage(jeu.getJoueurActif().getProchainJoueur().getProchainJoueur().getProchainJoueur());
 	    }
 	    getScene().getWindow().sizeToScene();
-	    
-		if (jeu.estPartieFinie()) {
-			Alert msg = new Alert(AlertType.INFORMATION, "Victoire de "+jeu.getGagnant());
-			msg.show();
-		}
 	}
 	
 	public Controleur getControleur() {

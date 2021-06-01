@@ -91,8 +91,6 @@ public class Mechant extends Bot {
 			test = test.getProchainJoueur();
 		}
 		
-		if (choix != null)
-			System.out.println("sur "+choix.nom);
 		return choix;
 	}
 	

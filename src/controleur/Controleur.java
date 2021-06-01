@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,7 +23,7 @@ import modele.Jeu;
 import modele.Joueur;
 import modele.cartes.Attaque;
 import modele.cartes.Carte;
-import modele.joueurs.Gentil;
+import modele.joueurs.Bot;
 import vue.Defausse;
 import vue.PanneauDeJeu;
 import vue.PanneauDebut;
@@ -103,6 +104,21 @@ public class Controleur {
 	}
 
 	public void tourSuivant() {
+		if (jeu.estPartieFinie()) {
+			Alert msg = new Alert(AlertType.NONE);
+			List<Joueur> gagnants = jeu.getGagnant();
+			if (gagnants.size() == 1) {
+				msg.setHeaderText("Victoire de "+gagnants.get(0).nom+" !");
+			} else {
+				String txt = "Joueurs ex aequo : "+gagnants.get(0).nom;
+				for (int i = 1; i < gagnants.size(); i++) {
+					txt += ", "+gagnants.get(i).nom;
+				}
+				msg.setHeaderText(txt);
+			}
+			msg.show();
+			return;
+		}
 		jeu.activeProchainJoueur();
 		panneau.actualiserAffichage();
 		piocheEnCours = true;
@@ -113,8 +129,8 @@ public class Controleur {
 		jeu.tireCarte();
 		panneau.actualiserAffichage();
 
-		if (jeu.getJoueurActif() instanceof Gentil) {
-			Gentil bot = (Gentil) jeu.getJoueurActif();
+		if (jeu.getJoueurActif() instanceof Bot) {
+			Bot bot = (Bot) jeu.getJoueurActif();
 			Carte carte;
 			int choix = bot.choisitCarte();
 			if (choix < 0) {

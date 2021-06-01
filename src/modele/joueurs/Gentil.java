@@ -73,7 +73,6 @@ public class Gentil extends Bot {
 		while (choix == this || rand.nextFloat() > 0.5) {
 			choix = choix.getProchainJoueur();
 		}
-		System.out.println("sur "+choix.nom);
 		return choix;
 	}
 	

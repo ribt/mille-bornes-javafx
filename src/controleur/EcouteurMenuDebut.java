@@ -4,22 +4,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.joueurs.Gentil;
 import modele.joueurs.Humain;
-import vue.PanneauDeJeu;
+import modele.joueurs.Mechant;
 
 public class EcouteurMenuDebut {
 
 	private Controleur controleur;
-	private ObservableList<String> difficulteBot = FXCollections.observableArrayList("Joueur", "Bot Facile");
+	private ObservableList<String> difficulteBot = FXCollections.observableArrayList("Joueur", "Bot Gentil", "Bot Méchant");
 
 	@FXML
 	private TextField nomJoueur1;
@@ -122,8 +120,10 @@ public class EcouteurMenuDebut {
 		switch (etatBot) {
 			case "Joueur":
 				return new Humain(nom);
-			case "Bot Facile":
+			case "Bot Gentil":
 				return new Gentil(nom);
+			case "Bot Méchant":
+				return new Mechant(nom);
 		}
 		return null;
 

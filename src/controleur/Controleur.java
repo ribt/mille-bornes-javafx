@@ -4,12 +4,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -122,9 +130,9 @@ public class Controleur {
 			int choix = bot.choisitCarte();
 			if (choix < 0) {
 				simulationEnCours = true;
-				this.choixBot = -choix+1;
+				this.choixBot = -choix-1;
 				this.cibleBot = null;
-				panneau.simulerDefausse(-choix+1);
+				panneau.simulerDefausse(-choix-1);
 			} else {
 				carte = bot.getMain().get(choix-1);
 				if (carte instanceof Attaque) {
@@ -161,18 +169,19 @@ public class Controleur {
 	public void sauvegarde() {
 		FileChooser dialogue = new FileChooser();
 		File fichier = dialogue.showSaveDialog(null);
-		if (fichier == null) {
-			return;
-		}
-		if (!fichier.getName().endsWith(".json")) {
-			fichier = new File(fichier.getAbsolutePath()+".json");
-		}
 		try {
-			DataOutputStream flux = new DataOutputStream(new FileOutputStream(fichier));
-			flux.writeChars(jeu.sauvegarde().toString());
-			flux.close();
-		} catch (IOException e) {
+			if (!fichier.getName().endsWith(".json")) {
+				fichier = new File(fichier.getAbsolutePath()+".json");
+			}
+			FileWriter writer = new FileWriter(fichier.getAbsolutePath());
+			writer.write(jeu.sauvegarde().toString());
+			writer.close();
+		} catch (Exception e) {
 			e.printStackTrace();
+			Alert msg = new Alert(AlertType.ERROR);
+			msg.setHeaderText("La sauvgarde a échoué.");
+			msg.setContentText(e.getMessage());
+			msg.show();
 		}
 	}
 
@@ -180,15 +189,16 @@ public class Controleur {
 		FileChooser dialogue = new FileChooser();
 		dialogue.getExtensionFilters().addAll(new ExtensionFilter("Fichiers JSON","*.json"), new ExtensionFilter("Tous les fichiers","*"));
 		File fichier = dialogue.showOpenDialog(null);
-		JsonObject jsonObject = new JsonObject();
 		try {
-			DataInputStream flux = new DataInputStream(new FileInputStream(fichier));
-			JsonElement jsonElement = JsonParser.parseString(flux.readUTF());
-			jsonObject = jsonElement.getAsJsonObject();
-			Jeu jeuChargé = new Jeu(jsonObject);
-			passerEnModeJeu(jeuChargé);
-		} catch (IOException e) {
+			JsonObject obj = JsonParser.parseReader(Files.newBufferedReader(Path.of(fichier.getAbsolutePath()))).getAsJsonObject();
+			this.jeu = new Jeu(obj);
+			passerEnModeJeu(jeu);
+		} catch (Exception e) {
 			e.printStackTrace();
+			Alert msg = new Alert(AlertType.ERROR);
+			msg.setHeaderText("Le chargement a échoué.");
+			msg.setContentText(e.getMessage());
+			msg.show();
 		}
 	}
 

@@ -29,6 +29,7 @@ public class PanneauDebut extends BorderPane {
 			FXMLLoader loaderMenuBar = new FXMLLoader(PanneauDeJeu.class.getResource("menu.fxml"));
 			MenuBar menus = loaderMenuBar.load();
 			this.ecouteurMenuBar = loaderMenuBar.getController();
+			ecouteurMenuBar.cacherBoutonsAccueil();
 			setTop(menus);
 		} catch (IOException e) {
 			e.printStackTrace();

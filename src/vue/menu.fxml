@@ -4,12 +4,10 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/"
-	xmlns:fx="http://javafx.com/fxml/"
-	fx:controller="controleur.EcouteurMenu">
+<MenuBar xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.EcouteurMenu">
 	<Menu text="Partie">
-		<MenuItem onAction="#commencer" text="Accueil" />
-		<MenuItem onAction="#sauvgarder" text="Enregistrer sous..." />
+		<MenuItem fx:id="boutonAccueil" onAction="#commencer" text="Accueil" />
+		<MenuItem fx:id="boutonEnregistrer" onAction="#sauvgarder" text="Enregistrer sous..." />
 		<MenuItem onAction="#charger" text="Charger une partie..." />
 		<MenuItem onAction="#quitter" text="Quitter" />
 	</Menu>

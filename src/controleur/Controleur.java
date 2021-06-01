@@ -126,9 +126,6 @@ public class Controleur {
 	}
 
 	private void jouerTour() {
-		jeu.tireCarte();
-		panneau.actualiserAffichage();
-
 		if (jeu.getJoueurActif() instanceof Bot) {
 			Bot bot = (Bot) jeu.getJoueurActif();
 			Carte carte;
@@ -158,6 +155,8 @@ public class Controleur {
 	public void finAnimation() {
 		if (piocheEnCours) {
 			piocheEnCours = false;
+			jeu.tireCarte();
+			panneau.actualiserAffichage();
 			jouerTour();
 		} else if (simulationEnCours) {
 			simulationEnCours = false;
@@ -215,9 +214,19 @@ public class Controleur {
 	public void passerEnModeJeu(Jeu jeu) {
 		this.jeu = jeu;
 		panneau.setJeu(jeu);
+		panneau.actualiserAffichage();
 		scene.setRoot(panneau);
-		scene.getWindow().setWidth(700); // on force la taille car sionon ça saute sans arrêt sleon le nombre de cartes en main
+		scene.getWindow().setWidth(700); // on force la taille car sinon ça saute sans arrêt selon le nombre de cartes en main
 		scene.getWindow().setHeight(750);
-		tourSuivant();
+		if (jeu.getNbCartesSabot()+6*jeu.getNbJoueurs() < 106) {// le jeu a déjà commencé : partie chargée
+			if (jeu.getJoueurActif().getMain().size() == 6) { // il n'a pas encore pioché
+				piocheEnCours = true;
+				panneau.animationPioche();
+			} else { // il a déjà pioché
+				jouerTour();
+			}
+		} else {
+			tourSuivant();
+		}
 	}
 }

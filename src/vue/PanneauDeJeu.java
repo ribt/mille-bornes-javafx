@@ -48,9 +48,8 @@ public class PanneauDeJeu extends StackPane {
 		secondPlan.setBottom(zoneDeJeu);
 	    
 		BorderPane.setAlignment(affJoueurDroite, Pos.CENTER);
-		secondPlan.setRight(affJoueurDroite);
 		BorderPane.setAlignment(affJoueurGauche, Pos.CENTER);
-		secondPlan.setLeft(affJoueurGauche);
+		
 		secondPlan.setCenter(milieu);
 	    
 	    try {
@@ -117,18 +116,22 @@ public class PanneauDeJeu extends StackPane {
 	
 	public void setJeu(Jeu jeu) {
 		this.jeu = jeu;
-		for (ZoneAffichageJoueur zone: new ZoneAffichageJoueur[]{affJoueurHaut, affJoueurDroite, affJoueurGauche})
-			zone.setVisible(false);
+		VBox partieHaute = ((VBox)secondPlan.getTop());
+		partieHaute.getChildren().remove(affJoueurHaut);
+
+		secondPlan.setRight(null);
+		secondPlan.setLeft(null);
+
 		int n = jeu.getNbJoueurs();
 	    if (n == 2) {
-	    	affJoueurHaut.setVisible(true);
+	    	partieHaute.getChildren().add(affJoueurHaut);
 	    } else if (n == 3) {
-	    	affJoueurDroite.setVisible(true);
-	    	affJoueurGauche.setVisible(true);
+	    	secondPlan.setRight(affJoueurDroite);
+			secondPlan.setLeft(affJoueurGauche);
 	    } else { // n == 4
-	    	affJoueurDroite.setVisible(true);
-	    	affJoueurHaut.setVisible(true);
-	    	affJoueurGauche.setVisible(true);
+	    	partieHaute.getChildren().add(affJoueurHaut);
+	    	secondPlan.setRight(affJoueurDroite);
+			secondPlan.setLeft(affJoueurGauche);
 	    }
 	}
 }

@@ -220,8 +220,8 @@ public class Controleur {
 	public void passerEnModeJeu(Jeu jeu) {
 		this.jeu = jeu;
 		panneau.setJeu(jeu);
-		scene.setRoot(panneau);
 		panneau.actualiserAffichage();
+		scene.setRoot(panneau);
 		scene.getWindow().sizeToScene();
 		scene.getWindow().centerOnScreen();
 		if (jeu.getNbCartesSabot()+6*jeu.getNbJoueurs() < 106) {// le jeu a déjà commencé : partie chargée

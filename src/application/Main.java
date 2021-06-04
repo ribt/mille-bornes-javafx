@@ -17,6 +17,7 @@ public class Main extends Application {
 		Scene scene = new Scene(controleur.getPanneauDebut());
 		controleur.setScene(scene);
 		stage.setScene(scene);
+		stage.setMaximized(true);
 		stage.setResizable(false);
 		stage.setTitle("1000 bornes");
 		stage.show();

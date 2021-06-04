@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
-
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -199,7 +200,8 @@ public class Controleur {
 		try {
 			JsonObject obj = JsonParser.parseReader(Files.newBufferedReader(Path.of(fichier.getAbsolutePath()))).getAsJsonObject();
 			this.jeu = new Jeu(obj);
-			passerEnModeJeu(jeu);
+			if (showConfirmation(jeu))
+				passerEnModeJeu(jeu);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Alert msg = new Alert(AlertType.ERROR);
@@ -211,7 +213,6 @@ public class Controleur {
 
 	public void hub() {
 		scene.setRoot(accueil);
-		scene.getWindow().sizeToScene();
 	}
 
 	public void passerEnModeJeu(Jeu jeu) {
@@ -231,13 +232,12 @@ public class Controleur {
 		}
 	}
 
-	private ButtonData showConfirmation(Jeu jeu) {
+	private boolean showConfirmation(Jeu jeu) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Charger partie");
 		alert.setHeaderText("Voulez vous charger cette partie ?");
 		alert.setContentText(jeu.toString());
-		alert.showAndWait();
-		return alert.getResult().getButtonData();
-
+		Optional<ButtonType> result = alert.showAndWait();
+		return (result.isPresent() && result.get() == ButtonType.OK);
 	}
 }

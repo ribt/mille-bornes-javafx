@@ -213,6 +213,8 @@ public class Controleur {
 
 	public void hub() {
 		scene.setRoot(accueil);
+		scene.getWindow().sizeToScene();
+		scene.getWindow().centerOnScreen();
 	}
 
 	public void passerEnModeJeu(Jeu jeu) {
@@ -220,6 +222,8 @@ public class Controleur {
 		panneau.setJeu(jeu);
 		scene.setRoot(panneau);
 		panneau.actualiserAffichage();
+		scene.getWindow().sizeToScene();
+		scene.getWindow().centerOnScreen();
 		if (jeu.getNbCartesSabot()+6*jeu.getNbJoueurs() < 106) {// le jeu a déjà commencé : partie chargée
 			if (jeu.getJoueurActif().getMain().size() == 6) { // il n'a pas encore pioché
 				piocheEnCours = true;

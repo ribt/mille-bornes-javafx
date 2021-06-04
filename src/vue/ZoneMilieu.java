@@ -64,7 +64,7 @@ public class ZoneMilieu extends GridPane {
 	}
 	
 	public Point2D getPositionPioche() {
-		Bounds bounds = pioche.localToScene(pioche.getBoundsInLocal());
+		Bounds bounds = pioche.localToScene(pioche.getBoundsInLocal(), true);	
 		return new Point2D(bounds.getMinX(), bounds.getMinY());
 	}
 	

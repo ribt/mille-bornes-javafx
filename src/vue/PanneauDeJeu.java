@@ -32,6 +32,8 @@ public class PanneauDeJeu extends StackPane {
 		this.premierPlan = new PremierPlan(controleur);
 		this.secondPlan = new BorderPane();
 		
+		setMinWidth(750);
+		
         getChildren().addAll(premierPlan, secondPlan);
         premierPlan.toFront();
 		
@@ -85,6 +87,7 @@ public class PanneauDeJeu extends StackPane {
 	}
 	
 	public void animationPioche() {
+		getScene().getWindow().sizeToScene(); // trust me ;)
 		premierPlan.animation(Carte.imageDos, milieu.getPositionPioche(), zoneDeJeu.getPositionCarte(6));
 	}
 	

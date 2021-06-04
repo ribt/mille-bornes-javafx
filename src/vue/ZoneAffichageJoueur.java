@@ -87,7 +87,6 @@ public class ZoneAffichageJoueur extends GridPane {
 			else
 				this.bottes[i].setImage(null);
 		}
-		
 	}
 	
 	public Joueur getJoueur() {

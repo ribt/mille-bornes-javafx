@@ -1,5 +1,6 @@
 package controleur;
 
+
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
@@ -14,6 +15,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -226,5 +229,15 @@ public class Controleur {
 		} else {
 			tourSuivant();
 		}
+	}
+
+	private ButtonData showConfirmation(Jeu jeu) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Charger partie");
+		alert.setHeaderText("Voulez vous charger cette partie ?");
+		alert.setContentText(jeu.toString());
+		alert.showAndWait();
+		return alert.getResult().getButtonData();
+
 	}
 }

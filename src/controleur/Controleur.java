@@ -16,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -200,7 +199,7 @@ public class Controleur {
 		try {
 			JsonObject obj = JsonParser.parseReader(Files.newBufferedReader(Path.of(fichier.getAbsolutePath()))).getAsJsonObject();
 			this.jeu = new Jeu(obj);
-			if (showConfirmation(jeu))
+			if (demanderConfirmation(jeu))
 				passerEnModeJeu(jeu);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -222,7 +221,9 @@ public class Controleur {
 		panneau.setJeu(jeu);
 		panneau.actualiserAffichage();
 		scene.setRoot(panneau);
-		scene.getWindow().sizeToScene();
+		// scene.getWindow().sizeToScene(); // ne fonctionne pas !!!
+		scene.getWindow().setWidth(800);
+		scene.getWindow().setHeight(800);
 		scene.getWindow().centerOnScreen();
 		if (jeu.getNbCartesSabot()+6*jeu.getNbJoueurs() < 106) {// le jeu a déjà commencé : partie chargée
 			if (jeu.getJoueurActif().getMain().size() == 6) { // il n'a pas encore pioché
@@ -234,9 +235,10 @@ public class Controleur {
 		} else {
 			tourSuivant();
 		}
+		
 	}
 
-	private boolean showConfirmation(Jeu jeu) {
+	private boolean demanderConfirmation(Jeu jeu) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Charger partie");
 		alert.setHeaderText("Voulez vous charger cette partie ?");

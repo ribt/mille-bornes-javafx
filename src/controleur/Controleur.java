@@ -11,6 +11,9 @@ import java.util.Optional;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import javafx.event.EventTarget;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -19,7 +22,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import modele.Jeu;
@@ -31,6 +36,7 @@ import vue.Defausse;
 import vue.PanneauDeJeu;
 import vue.PanneauDebut;
 import vue.ZoneAffichageJoueur;
+import vue.ZoneMilieu;
 
 public class Controleur {
 	private Jeu jeu;
@@ -62,7 +68,12 @@ public class Controleur {
 			return;
 		}
 		scene.setCursor(Cursor.MOVE);
-		this.carteSelectionne = GridPane.getColumnIndex((ImageView) event.getSource());
+		ImageView img = (ImageView) event.getSource();
+		this.carteSelectionne = GridPane.getColumnIndex(img);
+		panneau.cacherCarte(carteSelectionne);
+		panneau.getPremierPlan().setDragging(jeu.getJoueurActif().getMain().get(carteSelectionne).getImage(),
+				new Point2D(event.getScreenX(), event.getScreenY()),
+				img.getX()-event.getX(), img.getY()-event.getY());
 	}
 
 	public void carteRelachee(MouseEvent event) {
@@ -70,9 +81,16 @@ public class Controleur {
 			event.consume();
 			return;
 		}
-
+		panneau.getPremierPlan().stopDragging();
 		scene.setCursor(Cursor.DEFAULT);
-		Node cible = event.getPickResult().getIntersectedNode();
+		Node cible = null;
+		Point2D p;
+		for (Pane zone: panneau.getZones()) {
+			p = zone.sceneToLocal(event.getSceneX(), event.getSceneY());			
+			if (zone.intersects(p.getX(), p.getY(), 0.1, 0.1)) {
+				cible = zone;
+			}
+		}
 
 		try {
 			if (cible != null) {
@@ -93,7 +111,7 @@ public class Controleur {
 					}
 				}
 
-				if (cible instanceof Defausse) {
+				if (cible instanceof ZoneMilieu) {
 					jeu.getJoueurActif().defausseCarte(jeu, carteSelectionne);
 					tourSuivant();
 				}

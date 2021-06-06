@@ -3,6 +3,9 @@ package vue;
 import java.util.List;
 
 import controleur.Controleur;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;

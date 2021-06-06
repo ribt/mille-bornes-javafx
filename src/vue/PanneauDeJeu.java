@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import modele.Jeu;
@@ -61,6 +62,8 @@ public class PanneauDeJeu extends StackPane {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	    
+	    secondPlan.setOnMouseDragged(premierPlan::sourisBouge);
 	}
 	
 	public void actualiserAffichage() {
@@ -133,5 +136,21 @@ public class PanneauDeJeu extends StackPane {
 	    	secondPlan.setRight(affJoueurDroite);
 			secondPlan.setLeft(affJoueurGauche);
 	    }
+	}
+	
+	public PremierPlan getPremierPlan() {
+		return premierPlan;
+	}
+	
+	public BorderPane getSecondPlan() {
+		return secondPlan;
+	}
+	
+	public Pane[] getZones() {
+		return new Pane[]{zoneDeJeu, affJoueurDroite, affJoueurHaut, affJoueurGauche, milieu};
+	}
+	
+	public void cacherCarte(int rang) {
+		zoneDeJeu.cacherCarte(rang);
 	}
 }
